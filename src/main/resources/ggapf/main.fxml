@@ -1,10 +1,177 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.canvas.Canvas?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TitledPane?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ggapf.Controller">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ggapf.Controller">
    <children>
-      <Button layoutX="287.0" layoutY="188.0" mnemonicParsing="false" onAction="#startButtonAction" text="Start" />
+      <VBox>
+         <children>
+            <HBox prefHeight="60.0" prefWidth="1024.0">
+               <children>
+                  <TextField prefHeight="32.0" prefWidth="150.0" text="source_file" />
+                  <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="80.0" text="Open">
+                     <HBox.margin>
+                        <Insets left="15.0" />
+                     </HBox.margin>
+                  </Button>
+                  <TextField prefHeight="32.0" prefWidth="150.0" text="result_file">
+                     <HBox.margin>
+                        <Insets left="60.0" />
+                     </HBox.margin>
+                  </TextField>
+                  <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="80.0" text="Save">
+                     <HBox.margin>
+                        <Insets left="15.0" />
+                     </HBox.margin>
+                  </Button>
+               </children>
+               <padding>
+                  <Insets bottom="10.0" left="30.0" right="30.0" top="20.0" />
+               </padding>
+            </HBox>
+            <HBox prefHeight="40.0" prefWidth="1024.0">
+               <children>
+                  <Label prefHeight="20.0" prefWidth="58.0" text="Size">
+                     <HBox.margin>
+                        <Insets top="5.0" />
+                     </HBox.margin>
+                  </Label>
+                  <TextField prefHeight="25.0" prefWidth="80.0" text="10">
+                     <HBox.margin>
+                        <Insets left="15.0" />
+                     </HBox.margin>
+                  </TextField>
+                  <Label alignment="CENTER" prefHeight="20.0" prefWidth="19.0" text="x">
+                     <HBox.margin>
+                        <Insets top="5.0" />
+                     </HBox.margin>
+                  </Label>
+                  <TextField prefHeight="25.0" prefWidth="80.0" text="10" />
+                  <Label prefHeight="20.0" prefWidth="66.0" text="Weights">
+                     <HBox.margin>
+                        <Insets left="60.0" top="5.0" />
+                     </HBox.margin>
+                  </Label>
+                  <TextField prefHeight="25.0" prefWidth="80.0" text="0.0" />
+                  <Label alignment="CENTER" prefHeight="20.0" prefWidth="19.0" text=":" />
+                  <TextField prefHeight="25.0" prefWidth="80.0" text="10.0" />
+                  <Label prefHeight="25.0" prefWidth="140.0" text="Subgraphs">
+                     <padding>
+                        <Insets left="60.0" top="5.0" />
+                     </padding>
+                  </Label>
+                  <TextField prefHeight="25.0" prefWidth="67.0" text="1">
+                     <HBox.margin>
+                        <Insets left="15.0" />
+                     </HBox.margin>
+                  </TextField>
+                  <Pane prefHeight="30.0" prefWidth="0.0" HBox.hgrow="ALWAYS">
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                  </Pane>
+                  <Button alignment="CENTER" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" text="Generate" textAlignment="CENTER" />
+               </children>
+               <padding>
+                  <Insets bottom="10.0" left="30.0" right="60.0" top="10.0" />
+               </padding>
+            </HBox>
+            <HBox prefHeight="48.0" prefWidth="1024.0">
+               <children>
+                  <Label text="Operation">
+                     <HBox.margin>
+                        <Insets top="5.0" />
+                     </HBox.margin>
+                  </Label>
+                  <RadioButton mnemonicParsing="false" text="BFS">
+                     <HBox.margin>
+                        <Insets left="30.0" top="5.0" />
+                     </HBox.margin>
+                  </RadioButton>
+                  <RadioButton mnemonicParsing="false" text="Dijkstra">
+                     <HBox.margin>
+                        <Insets left="30.0" top="5.0" />
+                     </HBox.margin>
+                  </RadioButton>
+                  <RadioButton mnemonicParsing="false" text="split into">
+                     <HBox.margin>
+                        <Insets left="30.0" top="5.0" />
+                     </HBox.margin>
+                  </RadioButton>
+                  <TextField prefHeight="25.0" prefWidth="43.0" text="5">
+                     <HBox.margin>
+                        <Insets left="10.0" />
+                     </HBox.margin>
+                     <padding>
+                        <Insets top="5.0" />
+                     </padding>
+                  </TextField>
+                  <Label prefHeight="20.0" prefWidth="95.0" text="subgraphs">
+                     <HBox.margin>
+                        <Insets left="10.0" top="5.0" />
+                     </HBox.margin>
+                  </Label>
+                  <Pane prefHeight="28.0" prefWidth="116.0" HBox.hgrow="ALWAYS" />
+                  <Button alignment="CENTER" mnemonicParsing="false" prefHeight="25.0" prefWidth="100.0" text="Start" textAlignment="CENTER" />
+               </children>
+               <padding>
+                  <Insets bottom="20.0" left="30.0" right="60.0" top="10.0" />
+               </padding>
+            </HBox>
+            <HBox fx:id="canvasWrapper" prefHeight="600.0" prefWidth="1024.0">
+               <children>
+                  <Canvas height="599.0" width="823.0" />
+                  <TitledPane animated="false" prefHeight="577.0" prefWidth="199.0" text="General Informations">
+                    <content>
+                        <VBox prefHeight="546.0" prefWidth="209.0">
+                           <children>
+                              <Label alignment="CENTER" prefHeight="17.0" prefWidth="209.0" text="Connected graph: ">
+                                 <VBox.margin>
+                                    <Insets top="15.0" />
+                                 </VBox.margin>
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                              </Label>
+                              <Label alignment="CENTER" prefHeight="17.0" prefWidth="209.0" styleClass="bold" text="YES">
+                                 <font>
+                                    <Font name="System Bold" size="18.0" />
+                                 </font>
+                              </Label>
+                              <Label alignment="CENTER" prefHeight="17.0" prefWidth="209.0" text="ShortestPath:">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                                 <VBox.margin>
+                                    <Insets top="15.0" />
+                                 </VBox.margin>
+                              </Label>
+                              <Label alignment="CENTER" prefHeight="17.0" prefWidth="209.0" styleClass="bold" text="420.069">
+                                 <font>
+                                    <Font name="System Bold" size="18.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </VBox>
+                    </content>
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </TitledPane>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
    </children>
 </AnchorPane>

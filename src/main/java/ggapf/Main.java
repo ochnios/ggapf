@@ -24,6 +24,7 @@ public class Main extends Application {
         scene.getStylesheets().add(css);
 
         stage.setScene(scene);
+        stage.setTitle("GGAPF - Graph Generator and Path Finder");
         stage.show();
         stage.setResizable(false);
     }
