@@ -1,34 +1,71 @@
 package ggapf;
 
+import java.io.BufferedReader;
 import java.io.File;  // Import the File class
-import java.io.FileNotFoundException;  // Import this class to handle errors
-import java.util.Scanner; // Import the Scanner class to read text files
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.Arrays;
 
 public class Reader {
     private Graph graph;
-    private String fileName;
+    private File fileName;
 
-    public Reader(String fileName) {
+    public Reader(File fileName) {
+        System.out.println("->READER_SET_UP");
         this.fileName = fileName;
+        System.out.println("->READER_SET^_UP");
     }
 
-    public Graph readGraph() {        
+    public Graph readGraph() throws IOException {        
         //ADD CAN READ!!!
+        System.out.println("->GRAPH_READING");
         int rows;
         int columns;
-        String rowsStr;
-        String columnsStr;
+
+        String line;
+        boolean firstLoop = true;
+        int row = 0;
+        int edges;
+        int argsCounter;
+
         //parsing first 2 elements (rows, columns)
-        Scanner scanner = new Scanner(this.fileName);
-        rowsStr = scanner.next();
-        rows = Integer.parseInt(rowsStr);
-        columnsStr = scanner.next();
-        columns = Integer.parseInt(columnsStr);
+        BufferedReader reader = new BufferedReader( new FileReader(this.fileName) );
 
-        this.graph = new Graph(rows, columns);
+        while ( (line = reader.readLine()) != null ) {
 
-        while (scanner.hasNextLine()) {
+            System.out.println("->AM READING! " + row);
+            String [] words = line.split("(\\s+)|:");
             
+            System.out.println(Arrays.toString(words));
+
+            try {
+                if(firstLoop == true) {
+                    System.out.println("->FIRST_LOOP!");
+                    rows = Integer.parseInt(words[0]);
+                    columns = Integer.parseInt(words[1]);
+                    this.graph = new Graph(rows, columns);
+                    firstLoop = false;
+                }
+                else {
+                    System.out.println("->SECOND_LOOP! " + row);
+                    edges = words.length / 2;
+                    argsCounter = 0;
+
+                    for(int edgeCounter = 0; edgeCounter < edges; edgeCounter++) {
+                        System.out.println("->EDGE_COUNTER " + argsCounter);
+                        System.out.println(words[argsCounter] + " " + words[argsCounter+1]);
+                        graph.getNode(row).getEdge(edgeCounter).setToNode(Integer.parseInt(words[argsCounter]));
+                        graph.getNode(row).getEdge(edgeCounter).setWeight(Double.parseDouble(words[argsCounter + 1]));
+                        System.out.println(graph.getNode(row).getEdge(edgeCounter).getToNode() + " " + graph.getNode(row).getEdge(edgeCounter).getWeight());
+                        argsCounter += 2;
+                    }
+
+                    row++;
+
+                }
+            } catch (ArrayIndexOutOfBoundsException | NumberFormatException e) {
+                System.out.println("->ERROR_READER_WHILE_READING");
+            }
         }
 
         return graph;

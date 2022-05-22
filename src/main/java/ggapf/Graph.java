@@ -13,6 +13,10 @@ public class Graph {
         this.nodes = new EdgesFromNode[nodesAmount];
     }
 
+    public EdgesFromNode getNode( int nodeNumber ) {
+        return this.nodes[nodeNumber];
+    }
+
     public int getRows() {
         return this.rows;
     }

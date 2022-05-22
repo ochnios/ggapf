@@ -9,11 +9,19 @@ public class Edge {
         this.toNode = -1;
     }
 
-    public void setWeight(int weight) {
+    public void setWeight(double weight) {
         this.weight = weight;
     }
 
     public void setToNode(int toNode) {
         this.toNode = toNode;
+    }
+
+    public double getWeight() {
+        return this.weight;
+    }
+
+    public int getToNode() {
+        return this.toNode;
     }
 }
