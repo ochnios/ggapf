@@ -57,8 +57,9 @@ public class Graph {
 	public void print() {
 		System.out.println(rows + " " + columns);
 		for (Map.Entry<Integer, TreeMap<Integer, Double>> row : nodes.entrySet()) {
+			System.out.println(row);
 			for (Map.Entry<Integer, Double> edge : row.getValue().entrySet()) {
-				System.out.print(edge.getKey() + ":" + edge.getValue() + " ");
+				//System.out.print(edge.getKey() + ":" + edge.getValue() + " ");
 			}
 			System.out.print("\n");
 		}

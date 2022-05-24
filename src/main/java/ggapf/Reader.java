@@ -51,16 +51,27 @@ public class Reader {
                 edges = words.length / 2;
                 argsCounter = 0;
 
-                for(int i = 0; i < edges; i++) {
-                    //System.out.println("->EDGE_COUNTER: " + argsCounter);
-                    //System.out.println(words[argsCounter] + " " + words[argsCounter+1]);
-
-                    int to = Integer.parseInt(words[argsCounter]);
-                    double weight = Double.parseDouble(words[argsCounter + 1]);
+                if(edges == 0) {
+                    
+                    int to = -1;
+                    double weight = -1.0;
                     graph.addEdge(rowNumber, to, weight);
+                    
+                }
+                else {
 
-                    //System.out.println("added edge from " + rowNumber + " to " + to + " with weight " + weight);
-                    argsCounter += 2;
+                    for(int i = 0; i < edges; i++) {
+                        //System.out.println("->EDGE_COUNTER: " + argsCounter);
+                        //System.out.println(words[argsCounter] + " " + words[argsCounter+1]);
+
+                        int to = Integer.parseInt(words[argsCounter]);
+                        double weight = Double.parseDouble(words[argsCounter + 1]);
+                        graph.addEdge(rowNumber, to, weight);
+
+                        //System.out.println("added edge from " + rowNumber + " to " + to + " with weight " + weight);
+                        argsCounter += 2;
+                    }
+
                 }
                 rowNumber++;
 
