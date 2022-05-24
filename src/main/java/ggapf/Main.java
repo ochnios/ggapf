@@ -30,11 +30,12 @@ public class Main extends Application {
         stage.setTitle("GGAPF - Graph Generator and Path Finder");
         stage.show();
         stage.setResizable(false);
+
         try {
-        File fileName = new File("test.txt");
-        Reader reader = new Reader(fileName);
-        Graph graph;
-        graph = reader.readGraph();
+            String pathname =  "test.txt";
+            Reader reader = new Reader(pathname);
+            Graph graph = reader.readGraph();
+            graph.print();
         } catch (Exception ex) {
             System.out.println("->ERROR_CODE: MAIN_READER_SET_UP");
             ex.printStackTrace();
