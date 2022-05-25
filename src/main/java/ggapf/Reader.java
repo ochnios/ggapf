@@ -8,6 +8,9 @@ import java.io.IOException;
 public class Reader {
     private Graph graph;
     private String pathname;
+    
+	static final int DEFAULT_NODE = -1;
+	static final double DEFAULT_WEIGHT = -1.0;
 
     public Reader(String pathname) {
         //System.out.println("->READER_SET_UP");
@@ -53,8 +56,8 @@ public class Reader {
 
                 if(edges == 0) {
                     
-                    int to = -1;
-                    double weight = -1.0;
+                    int to = DEFAULT_NODE;
+                    double weight = DEFAULT_WEIGHT;
                     graph.addEdge(rowNumber, to, weight);
                     
                 }
