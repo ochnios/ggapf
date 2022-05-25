@@ -33,6 +33,7 @@ public class Main extends Application {
             Reader reader = new Reader(pathname);
             Graph graph = reader.readGraph();
             graph.print();
+            graph.isGraphConnected(0);
         } catch (Exception ex) {
             System.out.println("->ERROR_CODE: MAIN_READER_SET_UP");
             ex.printStackTrace();

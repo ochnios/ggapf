@@ -2,14 +2,28 @@ package ggapf;
 
 import java.util.Map;
 import java.util.TreeMap;
+import java.util.Queue;
+import java.util.LinkedList;
+import java.util.ArrayList;
 
 public class Graph {
 	private TreeMap<Integer, TreeMap<Integer, Double>> nodes; // adjacency list
 	private int rows;
 	private int columns;
+	private Queue<Integer> queue; 
+	private ArrayList<Integer> seenNodes;
+
+	static final int SEEN_NODE = 1;
+	static final int UNSEEN_NODE = 0;
+	static final int DEFAULT_NODE = -1;
+	static final double DEFAULT_WEIGHT = -1.0;
+	static final int CONNECTED_GRAPH = 1;
+	static final int NOT_CONNECTED_GRAPH = 0;
 
 	public Graph(int rows, int columns) {
 		this.nodes = new TreeMap<Integer, TreeMap<Integer, Double>>();
+		this.queue = new LinkedList<Integer>();
+		this.seenNodes = new ArrayList<Integer>(rows * columns);
 		this.rows = rows;
 		this.columns = columns;
 	}
@@ -57,12 +71,64 @@ public class Graph {
 	public void print() {
 		System.out.println(rows + " " + columns);
 		for (Map.Entry<Integer, TreeMap<Integer, Double>> row : nodes.entrySet()) {
-			System.out.println(row);
+			//System.out.println(row);
 			for (Map.Entry<Integer, Double> edge : row.getValue().entrySet()) {
-				//System.out.print(edge.getKey() + ":" + edge.getValue() + " ");
+				System.out.print(edge.getKey() + ":" + edge.getValue() + " ");
 			}
 			System.out.print("\n");
 		}
+	}
+
+	public int isGraphConnected(int startingNode) {
+
+		queue.add(startingNode);
+
+		int nodesAmount = getNumberOfNodes();
+		int currentNode;
+
+		for(int i = 0; i < nodesAmount; i++) {
+			seenNodes.add(0);
+		}
+
+		while( this.queue.peek() != null ) { 
+			
+			currentNode = queue.poll();
+			seenNodes.set(currentNode, 1);
+			lookForTheSurroundingNodes(currentNode);
+
+		}
+
+		int connectedGraph = lookIfEveryNodeHasBeenVisited();
+
+		System.out.println("IS GRAPH CONNECTED?: " + connectedGraph);
+
+		return connectedGraph;
+	}
+
+	public int lookIfEveryNodeHasBeenVisited() {
+
+		int nodesAmount = getNumberOfNodes();
+
+		for(int i = 0; i < nodesAmount; i++)
+			if(seenNodes.get(i) == UNSEEN_NODE)
+				return NOT_CONNECTED_GRAPH;
+
+		return CONNECTED_GRAPH;
+	}
+
+	public void lookForTheSurroundingNodes (int currentNode) {
+		
+		//nodes.get(currentNode) = getEdges(currentNode)
+		for (Map.Entry<Integer, Double> edge : getEdges(currentNode).entrySet()) {
+
+			if((edge.getKey() != DEFAULT_NODE) && (seenNodes.get(edge.getKey()) == UNSEEN_NODE)) {
+				queue.add(edge.getKey());
+				seenNodes.set(edge.getKey(), SEEN_NODE);
+				//System.out.println("Added: [" + edge.getKey() + "] to the queue.");
+			}
+
+		}
+
 	}
 
 	// TreeMap has removing by key (remove(Object key))
