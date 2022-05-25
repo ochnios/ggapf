@@ -17,8 +17,8 @@ public class Graph {
 	static final int UNSEEN_NODE = 0;
 	static final int DEFAULT_NODE = -1;
 	static final double DEFAULT_WEIGHT = -1.0;
-	static final int CONNECTED_GRAPH = 1;
-	static final int NOT_CONNECTED_GRAPH = 0;
+	static final boolean CONNECTED_GRAPH = true;
+	static final boolean NOT_CONNECTED_GRAPH = false;
 
 	public Graph(int rows, int columns) {
 		this.nodes = new TreeMap<Integer, TreeMap<Integer, Double>>();
@@ -79,7 +79,7 @@ public class Graph {
 		}
 	}
 
-	public int isGraphConnected(int startingNode) {
+	public boolean isGraphConnected(int startingNode) {
 
 		queue.add(startingNode);
 
@@ -98,14 +98,14 @@ public class Graph {
 
 		}
 
-		int connectedGraph = lookIfEveryNodeHasBeenVisited();
+		boolean connectedGraph = lookIfEveryNodeHasBeenVisited();
 
 		System.out.println("IS GRAPH CONNECTED?: " + connectedGraph);
 
 		return connectedGraph;
 	}
 
-	public int lookIfEveryNodeHasBeenVisited() {
+	public boolean lookIfEveryNodeHasBeenVisited() {
 
 		int nodesAmount = getNumberOfNodes();
 

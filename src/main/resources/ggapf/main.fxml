@@ -12,24 +12,24 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ggapf.Controller">
+<AnchorPane fx:id="window" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ggapf.Controller">
    <children>
       <VBox>
          <children>
             <HBox prefHeight="60.0" prefWidth="1024.0">
                <children>
-                  <TextField prefHeight="32.0" prefWidth="150.0" text="source_file" />
-                  <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="80.0" text="Open">
+                  <TextField fx:id="sourceFilenameField" prefHeight="32.0" prefWidth="150.0" text="source_file" />
+                  <Button fx:id="openButton" mnemonicParsing="false" onAction="#openButtonAction" prefHeight="25.0" prefWidth="80.0" text="Open">
                      <HBox.margin>
                         <Insets left="15.0" />
                      </HBox.margin>
                   </Button>
-                  <TextField prefHeight="32.0" prefWidth="150.0" text="result_file">
+                  <TextField fx:id="resultFilenameField" prefHeight="32.0" prefWidth="150.0" text="result_file">
                      <HBox.margin>
                         <Insets left="60.0" />
                      </HBox.margin>
                   </TextField>
-                  <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="80.0" text="Save">
+                  <Button fx:id="saveButton" mnemonicParsing="false" onAction="#saveButtonAction" prefHeight="25.0" prefWidth="80.0" text="Save">
                      <HBox.margin>
                         <Insets left="15.0" />
                      </HBox.margin>
@@ -46,7 +46,7 @@
                         <Insets top="5.0" />
                      </HBox.margin>
                   </Label>
-                  <TextField prefHeight="25.0" prefWidth="80.0" text="10">
+                  <TextField fx:id="rowsField" prefHeight="25.0" prefWidth="80.0" text="10">
                      <HBox.margin>
                         <Insets left="15.0" />
                      </HBox.margin>
@@ -56,21 +56,21 @@
                         <Insets top="5.0" />
                      </HBox.margin>
                   </Label>
-                  <TextField prefHeight="25.0" prefWidth="80.0" text="10" />
+                  <TextField fx:id="columnsField" prefHeight="25.0" prefWidth="80.0" text="10" />
                   <Label prefHeight="20.0" prefWidth="66.0" text="Weights">
                      <HBox.margin>
                         <Insets left="60.0" top="5.0" />
                      </HBox.margin>
                   </Label>
-                  <TextField prefHeight="25.0" prefWidth="80.0" text="0.0" />
+                  <TextField fx:id="minWeightField" prefHeight="25.0" prefWidth="80.0" text="0.0" />
                   <Label alignment="CENTER" prefHeight="20.0" prefWidth="19.0" text=":" />
-                  <TextField prefHeight="25.0" prefWidth="80.0" text="10.0" />
-                  <Label prefHeight="25.0" prefWidth="140.0" text="Subgraphs">
+                  <TextField fx:id="maxWeightField" prefHeight="25.0" prefWidth="80.0" text="10.0" />
+                  <Label fx:id="dupadupa" prefHeight="25.0" prefWidth="140.0" text="Subgraphs">
                      <padding>
                         <Insets left="60.0" top="5.0" />
                      </padding>
                   </Label>
-                  <TextField prefHeight="25.0" prefWidth="67.0" text="1">
+                  <TextField fx:id="subgraphsField" prefHeight="25.0" prefWidth="67.0" text="1">
                      <HBox.margin>
                         <Insets left="15.0" />
                      </HBox.margin>
@@ -80,7 +80,7 @@
                         <Insets />
                      </HBox.margin>
                   </Pane>
-                  <Button alignment="CENTER" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" text="Generate" textAlignment="CENTER" />
+                  <Button fx:id="generateButton" alignment="CENTER" mnemonicParsing="false" onAction="#generateButtonAction" prefHeight="30.0" prefWidth="100.0" text="Generate" textAlignment="CENTER" />
                </children>
                <padding>
                   <Insets bottom="10.0" left="30.0" right="60.0" top="10.0" />
@@ -93,22 +93,22 @@
                         <Insets top="5.0" />
                      </HBox.margin>
                   </Label>
-                  <RadioButton mnemonicParsing="false" text="BFS">
+                  <RadioButton fx:id="bfsOption" mnemonicParsing="false" text="BFS">
                      <HBox.margin>
                         <Insets left="30.0" top="5.0" />
                      </HBox.margin>
                   </RadioButton>
-                  <RadioButton mnemonicParsing="false" text="Dijkstra">
+                  <RadioButton fx:id="dijkstraOption" mnemonicParsing="false" text="Dijkstra">
                      <HBox.margin>
                         <Insets left="30.0" top="5.0" />
                      </HBox.margin>
                   </RadioButton>
-                  <RadioButton mnemonicParsing="false" text="split into">
+                  <RadioButton fx:id="splitOption" mnemonicParsing="false" text="split into">
                      <HBox.margin>
                         <Insets left="30.0" top="5.0" />
                      </HBox.margin>
                   </RadioButton>
-                  <TextField prefHeight="25.0" prefWidth="43.0" text="5">
+                  <TextField fx:id="splitSubgraphsField" prefHeight="25.0" prefWidth="43.0" text="5">
                      <HBox.margin>
                         <Insets left="10.0" />
                      </HBox.margin>
@@ -122,7 +122,7 @@
                      </HBox.margin>
                   </Label>
                   <Pane prefHeight="28.0" prefWidth="116.0" HBox.hgrow="ALWAYS" />
-                  <Button alignment="CENTER" mnemonicParsing="false" onAction="#startButtonAction" prefHeight="25.0" prefWidth="100.0" text="Start" textAlignment="CENTER" />
+                  <Button fx:id="startButton" alignment="CENTER" mnemonicParsing="false" onAction="#startButtonAction" prefHeight="25.0" prefWidth="100.0" text="Start" textAlignment="CENTER" />
                </children>
                <padding>
                   <Insets bottom="20.0" left="30.0" right="60.0" top="10.0" />
@@ -133,7 +133,7 @@
                   <Pane fx:id="canvasPane" prefHeight="600.0" prefWidth="824.0" />
                   <TitledPane animated="false" prefHeight="577.0" prefWidth="224.0" text="General Informations">
                     <content>
-                        <VBox prefHeight="546.0" prefWidth="200.0">
+                        <VBox fx:id="sidebar" prefHeight="546.0" prefWidth="200.0">
                            <children>
                               <Label alignment="CENTER" prefHeight="17.0" prefWidth="209.0" text="Connected graph: ">
                                  <VBox.margin>
@@ -143,7 +143,7 @@
                                     <Font size="18.0" />
                                  </font>
                               </Label>
-                              <Label alignment="CENTER" prefHeight="17.0" prefWidth="209.0" styleClass="bold" text="YES">
+                              <Label fx:id="connectedInfo" alignment="CENTER" prefHeight="17.0" prefWidth="209.0" styleClass="bold" text="-">
                                  <font>
                                     <Font name="System Bold" size="18.0" />
                                  </font>
@@ -156,7 +156,7 @@
                                     <Insets top="15.0" />
                                  </VBox.margin>
                               </Label>
-                              <Label alignment="CENTER" prefHeight="17.0" prefWidth="209.0" styleClass="bold" text="420.069">
+                              <Label fx:id="shortestPathInfo" alignment="CENTER" prefHeight="17.0" prefWidth="209.0" styleClass="bold" text="-">
                                  <font>
                                     <Font name="System Bold" size="18.0" />
                                  </font>
