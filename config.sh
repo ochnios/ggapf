@@ -3,6 +3,8 @@
 # you should have downloaded project folder
 # you should be in project folder
 
+projectLocation="$PWD"
+
 # 1. INSTALL JDK
 sudo apt install openjdk-17-jdk
 
@@ -16,13 +18,17 @@ sudo mv apache-maven-3.8.5-bin.tar.gz /usr/local/apache-maven
 cd /usr/local/apache-maven
 sudo tar -xzvf apache-maven-3.8.5-bin.tar.gz 
 
-sudo echo "export M2_HOME=/usr/local/apache-maven/apache-maven-3.8.5" >> ~/.profile
-sudo echo "export M2=$M2_HOME/bin" >> ~/.profile
-sudo echo "export MAVEN_OPTS="-Xms256m -Xmx512m"" >> ~/.profile
-sudo echo "export PATH=$M2:$PATH  " >> ~/.profile
+M2_HOME=/usr/local/apache-maven/apache-maven-3.8.5
+M2=$M2_HOME/bin
+
+sudo echo "export M2_HOME=$M2_HOME" >> ~/.profile
+sudo echo "export M2=$M2" >> ~/.profile
+sudo echo "export MAVEN_OPTS=\"-Xms256m -Xmx512m\"" >> ~/.profile
+sudo echo "export PATH=\"$M2:$PATH\" " >> ~/.profile
 source ~/.profile
 
 # 3. COMPILE GGAPF
+cd "$projectLocation"
 mvn compile
 
 # 4. RUN GGAPF
