@@ -14,7 +14,10 @@ import java.io.IOException;
 public class Main extends Application {
 
     private static Scene scene;
+    private static FXMLLoader loader;
+    private static Controller controller;
     private static Popup popup;
+    private static Display display;
     private static Reader reader;
     private static Graph graph;
 
@@ -32,19 +35,13 @@ public class Main extends Application {
         stage.show();
         stage.setResizable(false);
 
+        controller = loader.getController();
+        display = controller.initDisplay();
+        
+        display.drawGraph(10, 20);
+
         // popup window setup
         popup = new Popup(scene);
-
-        try {
-            String pathname =  "test.txt";
-            Reader reader = new Reader(pathname);
-            Graph graph = reader.readGraph();
-            graph.print();
-            graph.isGraphConnected(0);
-        } catch (Exception ex) {
-            System.out.println("->ERROR_CODE: MAIN_READER_SET_UP");
-            ex.printStackTrace();
-        }
     }
 
     public static void open(String pathname) {
@@ -57,6 +54,8 @@ public class Main extends Application {
 
         if(graph == null) {
             showPopup("Can't read from given file!");
+        } else {
+            showPopup("File opened");
         }
     }
 
@@ -80,13 +79,9 @@ public class Main extends Application {
             false;
     }
 
-    static void setRoot(String fxml) throws IOException {
-        scene.setRoot(loadFXML(fxml));
-    }
-
     private static Parent loadFXML(String fxml) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource(fxml + ".fxml"));
-        return fxmlLoader.load();
+        loader = new FXMLLoader(Main.class.getResource(fxml + ".fxml"));
+        return loader.load();
     }
 
     public static void main(String[] args) {

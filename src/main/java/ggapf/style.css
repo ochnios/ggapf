@@ -10,7 +10,7 @@ Button, Label, RadioButton {
     -fx-font-size: 14px;
 }
 
-TitledPane Label {
+#footer Label {
     -fx-font-size: 18px;
 }
 

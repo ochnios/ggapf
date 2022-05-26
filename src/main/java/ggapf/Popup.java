@@ -21,6 +21,7 @@ public class Popup {
 
         stage = new Stage();
         stage.setScene(new Scene(root));
+        stage.setTitle("Message");
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.initOwner(rootScene.getWindow());
     }

@@ -5,7 +5,6 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.control.TitledPane?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
@@ -128,49 +127,39 @@
                   <Insets bottom="20.0" left="30.0" right="60.0" top="10.0" />
                </padding>
             </HBox>
-            <HBox fx:id="canvasWrapper" prefHeight="600.0" prefWidth="1024.0">
+            <HBox prefHeight="560.0" prefWidth="1024.0">
                <children>
-                  <Pane fx:id="canvasPane" prefHeight="600.0" prefWidth="824.0" />
-                  <TitledPane animated="false" prefHeight="577.0" prefWidth="224.0" text="General Informations">
-                    <content>
-                        <VBox fx:id="sidebar" prefHeight="546.0" prefWidth="200.0">
-                           <children>
-                              <Label alignment="CENTER" prefHeight="17.0" prefWidth="209.0" text="Connected graph: ">
-                                 <VBox.margin>
-                                    <Insets top="15.0" />
-                                 </VBox.margin>
-                                 <font>
-                                    <Font size="18.0" />
-                                 </font>
-                              </Label>
-                              <Label fx:id="connectedInfo" alignment="CENTER" prefHeight="17.0" prefWidth="209.0" styleClass="bold" text="-">
-                                 <font>
-                                    <Font name="System Bold" size="18.0" />
-                                 </font>
-                              </Label>
-                              <Label alignment="CENTER" prefHeight="17.0" prefWidth="209.0" text="ShortestPath:">
-                                 <font>
-                                    <Font size="18.0" />
-                                 </font>
-                                 <VBox.margin>
-                                    <Insets top="15.0" />
-                                 </VBox.margin>
-                              </Label>
-                              <Label fx:id="shortestPathInfo" alignment="CENTER" prefHeight="17.0" prefWidth="209.0" styleClass="bold" text="-">
-                                 <font>
-                                    <Font name="System Bold" size="18.0" />
-                                 </font>
-                              </Label>
-                           </children>
-                        </VBox>
-                    </content>
-                     <font>
-                        <Font size="14.0" />
-                     </font>
-                  </TitledPane>
+                  <HBox fx:id="canvasWrapper" prefHeight="560.0" prefWidth="1024.0" />
                </children>
             </HBox>
          </children>
       </VBox>
+      <HBox id="footer" layoutY="728.0" prefHeight="42.0" prefWidth="1024.0">
+         <children>
+            <Label prefHeight="27.0" prefWidth="180.0" text="Connected graph: ">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label fx:id="connectedInfo" alignment="TOP_LEFT" prefHeight="27.0" prefWidth="74.0" styleClass="bold" text="---">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
+            <Label prefHeight="27.0" prefWidth="136.0" text="ShortestPath:">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label fx:id="shortestPathInfo1" prefHeight="27.0" prefWidth="178.0" styleClass="bold" text="unknown">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
+         </children>
+         <padding>
+            <Insets bottom="12.0" left="30.0" right="30.0" top="8.0" />
+         </padding>
+      </HBox>
    </children>
 </AnchorPane>

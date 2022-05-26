@@ -9,13 +9,14 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.Pane;
+import javafx.scene.layout.HBox;
 
 public class Controller implements Initializable {
 
     // Pane for displaying graph
+    //private Pane canvasPane;
     @FXML
-    private Pane canvasPane;
+    private HBox canvasWrapper;
     private Display display;
 
     // Open & Save bar
@@ -47,7 +48,7 @@ public class Controller implements Initializable {
     @FXML
     private TextField splitSubgraphsField;
 
-    // Informations side bar
+    // Informations sidebar
     @FXML
     private Label connectedInfo;
     @FXML
@@ -95,7 +96,11 @@ public class Controller implements Initializable {
 
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
-        display = new Display(canvasPane);
-        display.drawGraph(10, 10);        
+        System.out.println("Main controller initialize...");    
+    }
+
+    public Display initDisplay() {
+        display = new Display(canvasWrapper);
+        return display;
     }
 }

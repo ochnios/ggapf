@@ -1,5 +1,6 @@
 # folders
 target/
+.vscode/
 
 # shell scripts
 *.sh
