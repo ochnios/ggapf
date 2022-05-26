@@ -3,6 +3,7 @@ target/
 
 # shell scripts
 *.sh
+!config.sh
 
 # Compiled class file
 *.class
