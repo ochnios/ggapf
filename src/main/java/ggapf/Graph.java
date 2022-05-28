@@ -12,6 +12,7 @@ public class Graph {
 	private int columns;
 	private Queue<Integer> queue; 
 	private ArrayList<Integer> seenNodes;
+	private ShortestPath shortestPath;
 
 	static final int SEEN_NODE = 1;
 	static final int UNSEEN_NODE = 0;
@@ -26,6 +27,7 @@ public class Graph {
 		this.seenNodes = new ArrayList<Integer>(rows * columns);
 		this.rows = rows;
 		this.columns = columns;
+		this.shortestPath = new ShortestPath();
 	}
 
 	public int getRows() {
