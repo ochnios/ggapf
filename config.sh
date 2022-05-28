@@ -8,8 +8,8 @@ projectLocation="$PWD"
 # 1. INSTALL JDK
 sudo apt install openjdk-17-jdk
 # remember about set the JAVA_HOME variable in ~/.bashrc
-# for example: sudo echo "export JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64" >> ~/.bashrc
-# and apply changes: source ~/.bashrc
+sudo echo "export JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64" >> ~/.bashrc
+source ~/.bashrc
 
 # 2. INSTALL MAVEN
 # https://github.com/m-thirumal/installation_guide/blob/master/maven/upgrade_maven.md
