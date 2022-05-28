@@ -7,10 +7,13 @@ projectLocation="$PWD"
 
 # 1. INSTALL JDK
 sudo apt install openjdk-17-jdk
+# remember about set the JAVA_HOME variable in ~/.bashrc
+# for example: sudo echo "export JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64" >> ~/.bashrc
+# and apply changes: source ~/.bashrc
 
 # 2. INSTALL MAVEN
 # https://github.com/m-thirumal/installation_guide/blob/master/maven/upgrade_maven.md
-# if you get 404 you should replace URL below with the url from the official Maven website
+# if you get 404 you should replace URL below with the URL from the official Maven website
 # you should replace also archive name
 wget https://dlcdn.apache.org/maven/maven-3/3.8.5/binaries/apache-maven-3.8.5-bin.tar.gz
 sudo mkdir -p /usr/local/apache-maven
