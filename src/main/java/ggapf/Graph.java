@@ -42,6 +42,10 @@ public class Graph {
 		return nodes.size();
 	}
 
+	public ShortestPath getShortestPath() {
+		return this.shortestPath;
+	}
+
 	public void addEdge(int from, int to, double weight) {
 		if (!(nodes.containsKey(from)))
 			nodes.put(from, new TreeMap<Integer, Double>()); // add node

@@ -79,6 +79,18 @@ public class Main extends Application {
             false;
     }
 
+    public static Boolean DFS() {
+        if(graph == null) {
+            Main.showPopup("Load or generate a graph at first!");
+            return null;
+        }
+
+        graph.getShortestPath().setShortestPath(Dijkstra.findShortestPath(graph, 0, 1));
+        System.out.println("SHORTEST PATH: " + graph.getShortestPath().getPathLength());
+        return true;
+    }
+
+
     private static Parent loadFXML(String fxml) throws IOException {
         loader = new FXMLLoader(Main.class.getResource(fxml + ".fxml"));
         return loader.load();
