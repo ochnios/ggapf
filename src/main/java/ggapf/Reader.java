@@ -48,6 +48,11 @@ public class Reader {
         // parsing edges
         while ( (line = reader.readLine()) != null ) {
             //System.out.println("->AM READING! " + rowNumber);
+
+            // remove whitespaces from the beggining of the line
+            while(line.startsWith(" ")) {
+                line = line.substring(1);
+            }
             words = line.split("(\\s+)|:");
             try {
                 //System.out.println("->SECOND_LOOP! " + rowNumber);
@@ -65,6 +70,7 @@ public class Reader {
 
                     for(int i = 0; i < edges; i++) {
                         //System.out.println("->EDGE_COUNTER: " + argsCounter);
+                        //System.out.println("from: " + rowNumber);
                         //System.out.println(words[argsCounter] + " " + words[argsCounter+1]);
 
                         int to = Integer.parseInt(words[argsCounter]);

@@ -37,26 +37,9 @@ public class Main extends Application {
 
         controller = loader.getController();
         display = controller.initDisplay();
-        
-        display.drawGraph(10, 20);
 
         // popup window setup
         popup = new Popup(scene);
-    }
-
-    public static void open(String pathname) {
-        try {
-            reader = new Reader(pathname);
-            graph = reader.readGraph();
-        } catch ( IOException e) {
-            showPopup("Something went wrong while reading the file");
-        }
-
-        if(graph == null) {
-            showPopup("Can't read from given file!");
-        } else {
-            showPopup("File opened");
-        }
     }
 
     public static void showPopup(String message) {
@@ -65,6 +48,23 @@ public class Main extends Application {
     
     public static void hidePopup() {
         popup.hide();
+    }
+
+    public static void open(String pathname) {
+        try {
+            reader = new Reader(pathname);
+            graph = reader.readGraph();
+            
+        } catch ( IOException e) {
+            showPopup("Something went wrong while reading the file");
+        }
+
+        if(graph == null) {
+            showPopup("Can't read from given file!");
+        } else {
+            display.drawGraph(graph);
+            showPopup("File opened");
+        }
     }
 
     public static Boolean BFS() {

@@ -10,6 +10,8 @@ public class Graph {
 	private TreeMap<Integer, TreeMap<Integer, Double>> nodes; // adjacency list
 	private int rows;
 	private int columns;
+	private double minWeight = 0.0; // TEMP
+	private double maxWeight = 10.0; // TEMP
 	private Queue<Integer> queue; 
 	private ArrayList<Integer> seenNodes;
 	private ShortestPath shortestPath;
@@ -77,12 +79,20 @@ public class Graph {
 	public void print() {
 		System.out.println(rows + " " + columns);
 		for (Map.Entry<Integer, TreeMap<Integer, Double>> row : nodes.entrySet()) {
-			//System.out.println(row);
 			for (Map.Entry<Integer, Double> edge : row.getValue().entrySet()) {
+				if(edge.getKey() == Graph.DEFAULT_NODE) break;
 				System.out.print(edge.getKey() + ":" + edge.getValue() + " ");
 			}
 			System.out.print("\n");
 		}
+	}
+
+	public double getMinWeight() {
+		return minWeight;
+	}
+
+	public double getMaxWeight() {
+		return maxWeight;
 	}
 
 	public boolean isGraphConnected(int startingNode) {
