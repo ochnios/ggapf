@@ -1,5 +1,6 @@
 package ggapf;
 
+import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -9,21 +10,23 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 
 public class Controller implements Initializable {
 
-    // Pane for displaying graph
-    //private Pane canvasPane;
+    private Display display;
+
     @FXML
     private HBox canvasWrapper;
-    private Display display;
 
     // Open & Save bar
     @FXML
-    private TextField sourceFilenameField;
+    private TextField sourceFileField;
+    private File selectedSourceFile;
     @FXML
-    private TextField resultFilenameField;
+    private TextField resultFileField;
+    private File selectedResultFile;
 
     // Generator bar
     @FXML
@@ -55,15 +58,37 @@ public class Controller implements Initializable {
     private Label shortestPathInfo;
 
     @FXML
+    private void sourceFileFieldAction(MouseEvent event) {
+        selectedSourceFile = Main.chooseFile();
+        if(selectedSourceFile != null)
+            sourceFileField.setText(selectedSourceFile.getName());
+        else
+            sourceFileField.setText("source_file");
+    }
+
+    @FXML
+    private void resultFileFieldAction(MouseEvent event) {
+        selectedResultFile = Main.chooseFile();
+        if(selectedResultFile != null)
+            resultFileField.setText(selectedResultFile.getName());
+        else
+            resultFileField.setText("result_file");
+    }
+
+    @FXML
     private void openButtonAction(ActionEvent event) {
-        System.out.println("OPEN");
-        String pathname = sourceFilenameField.getText();
-        Main.open(pathname);
+        if(selectedSourceFile == null)
+            Main.showPopup("Please choose the coorect file at first");
+        else 
+            Main.open(selectedSourceFile);
     }
 
     @FXML
     private void saveButtonAction(ActionEvent event) {
-        Main.showPopup("SAVE");
+        if(selectedResultFile == null)
+            Main.showPopup("Please choose the coorect file at first");
+        else 
+            Main.save(selectedSourceFile);
     }
 
     @FXML
@@ -96,7 +121,7 @@ public class Controller implements Initializable {
 
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
-        System.out.println("Main controller initialize...");    
+        System.out.println("Main controller initialize...");
     }
 
     public Display initDisplay() {

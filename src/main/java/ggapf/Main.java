@@ -4,8 +4,11 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import javafx.stage.FileChooser.ExtensionFilter;
 
+import java.io.File;
 import java.io.IOException;
 
 /**
@@ -13,6 +16,7 @@ import java.io.IOException;
  */
 public class Main extends Application {
 
+    private static Stage stage;
     private static Scene scene;
     private static FXMLLoader loader;
     private static Controller controller;
@@ -24,6 +28,7 @@ public class Main extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         // primary stage setup
+        Main.stage = stage;
         String fxmlFileName = new String("main");
         scene = new Scene(loadFXML(fxmlFileName));
 
@@ -50,12 +55,24 @@ public class Main extends Application {
         popup.hide();
     }
 
-    public static void open(String pathname) {
+    public static File chooseFile() {
+        File initialDirectory = new File(System.getProperty("user.dir"));
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Open source File");
+        fileChooser.getExtensionFilters().addAll(new ExtensionFilter("All Files", "*.*"));
+        fileChooser.setInitialDirectory(initialDirectory);
+
+        File selectedFile = fileChooser.showOpenDialog(stage);
+
+        return selectedFile; 
+    }
+
+    public static void open(File selectedFile) {
         try {
-            reader = new Reader(pathname);
+            reader = new Reader(selectedFile);
             graph = reader.readGraph();
-            
-        } catch ( IOException e) {
+
+        } catch (IOException e) {
             showPopup("Something went wrong while reading the file");
         }
 
@@ -65,6 +82,11 @@ public class Main extends Application {
             display.drawGraph(graph);
             showPopup("File opened");
         }
+    }
+
+    public static void save(File selectedFile) {
+        Main.showPopup("Writer not implemented yet...");
+        // run writer module
     }
 
     public static Boolean BFS() {

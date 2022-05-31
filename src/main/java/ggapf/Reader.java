@@ -7,14 +7,14 @@ import java.io.IOException;
 
 public class Reader {
     private Graph graph;
-    private String pathname;
+    private File file;
     
 	static final int DEFAULT_NODE = -1;
 	static final double DEFAULT_WEIGHT = -1.0;
 
-    public Reader(String pathname) {
+    public Reader(File file) {
         //System.out.println("->READER_SET_UP");
-        this.pathname = pathname;
+        this.file = file;
     }
 
     public Graph readGraph() throws IOException {
@@ -28,11 +28,8 @@ public class Reader {
         int edges;
         int argsCounter;
 
-        File file = new File(this.pathname);
-        if(!(file.canRead())) {
-            System.out.println("CANNOT READ FROM GIVEN FILE");
-            return null;
-        }
+        if(file == null) return null;
+        if(!(file.canRead())) return null;
 
         BufferedReader reader = new BufferedReader( new FileReader(file) );
 
