@@ -16,6 +16,7 @@ public class Graph {
 	private ArrayList<Integer> seenNodes;
 	private ShortestPath shortestPath;
 
+
 	static final int SEEN_NODE = 1;
 	static final int UNSEEN_NODE = 0;
 	static final int DEFAULT_NODE = -1;
@@ -74,6 +75,10 @@ public class Graph {
 		}
 
 		return null;
+	}
+
+	public TreeMap<Integer, TreeMap<Integer, Double>> getNodes() {
+		return this.nodes;
 	}
 
 	public void print() {

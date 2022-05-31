@@ -2,6 +2,8 @@ package ggapf;
 
 import java.util.ArrayList;
 import java.util.PriorityQueue;
+import java.util.TreeMap;
+import java.util.Map;
 
 public class Dijkstra extends ShortestPath {
 
@@ -11,18 +13,19 @@ public class Dijkstra extends ShortestPath {
 
     public static ShortestPath findShortestPath(Graph graph, int beginNode, int endNode){
         ShortestPath shortestPath = new ShortestPath();
-        shortestPath.setPathLength(dijkstra(graph, beginNode, endNode));
-        shortestPath.setPath(null);
+        shortestPath.setShortestPath(dijkstra(graph, beginNode, endNode));
         return shortestPath;
     }
 
-    public static double dijkstra(Graph graph, int beginNode, int endNode) {
-
+    public static ShortestPath dijkstra(Graph graph, int beginNode, int endNode) {
+        
         if(beginNode < 0 || beginNode >= graph.getNumberOfNodes() || endNode < 0 || endNode >= graph.getNumberOfNodes()) {
             System.out.println("dijkstra(): given indexes out of range!");
 
             //dodanie wywalenia programu
         }
+
+        ShortestPath shortestPath = new ShortestPath();
 
         double pathLength = 0.0;
         int nodesAmount = graph.getNumberOfNodes();
@@ -31,26 +34,61 @@ public class Dijkstra extends ShortestPath {
 
         ArrayList<Double> distance = new ArrayList<Double>(nodesAmount);    // currently known shortest paths lengths
         ArrayList<Integer> seenNodes = new ArrayList<Integer>(nodesAmount); // marking examined nodes
-        ArrayList<Integer> prev = new ArrayList<Integer>(nodesAmount);      // nodes throught which the shortest path
+        ArrayList<Integer> previousNode = new ArrayList<Integer>(nodesAmount);
 
-        PriorityQueue<Integer> queue = new PriorityQueue<Integer>(); 
+        PriorityQueue<NodeAndWeightPair> queue = new PriorityQueue<NodeAndWeightPair>(); 
 
-        int currentNode;
-        int examinedNode;
+        NodeAndWeightPair currentNode = new NodeAndWeightPair();
+        NodeAndWeightPair examinedNode = new NodeAndWeightPair();
         double newPathLength;
 
 		for(int i = 0; i < nodesAmount; i++) {
 			seenNodes.add(UNSEEN_NODE);
             distance.add(Double.MAX_VALUE);
-            prev.add(PREV_UNKNOWN);
+            previousNode.add(PREV_UNKNOWN);
 		}
+
+        currentNode.setNode(beginNode);
+        currentNode.setWeight(0.0);
         
-        queue.add(beginNode);
+        queue.add(currentNode);
         distance.set(beginNode, 0.0);
-        prev.set(beginNode, beginNode);
+        previousNode.set(beginNode, beginNode);
+
+        while( (queue.size() > 0) && (currentNode.getNode() != endNode) ) {
+            currentNode = queue.poll();
+            seenNodes.set(currentNode.getNode(), SEEN_NODE);
+            //nodes.get(currentNode) = getEdges(currentNode)
+            for (Map.Entry<Integer, Double> edge : graph.getEdges(currentNode.getNode()).entrySet()) {
+    
+                examinedNode.setNode(edge.getKey());
+                examinedNode.setWeight(edge.getValue());
+    
+                if(examinedNode.getNode() == Graph.DEFAULT_NODE || seenNodes.get(examinedNode.getNode()) == Graph.SEEN_NODE)
+                    continue;
+
+                newPathLength = distance.get(currentNode.getNode()) + examinedNode.getWeight();
+                
+                if(distance.get(examinedNode.getNode()) > newPathLength) {
+                    distance.set(examinedNode.getNode(), newPathLength);
+                    previousNode.set(examinedNode.getNode(), currentNode.getNode());
+                    examinedNode.setWeight(newPathLength);
+                    queue.add(examinedNode);
+                }
+            }
 
 
-       return pathLength;
+        }
+
+        if(currentNode.getNode() == endNode) {
+            shortestPath.setPathLength(distance.get(currentNode.getNode()));
+            shortestPath.setPath(previousNode);
+        } else {
+            shortestPath.setPathLength(Double.MAX_VALUE);
+            shortestPath.setPath(null);
+        }
+
+        return shortestPath;
     }
 
 }

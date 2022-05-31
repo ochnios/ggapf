@@ -54,7 +54,6 @@ public class Main extends Application {
         try {
             reader = new Reader(pathname);
             graph = reader.readGraph();
-            
         } catch ( IOException e) {
             showPopup("Something went wrong while reading the file");
         }
