@@ -11,7 +11,7 @@ Button, Label, RadioButton {
 }
 
 #footer Label {
-    -fx-font-size: 18px;
+    -fx-font-size: 16px;
 }
 
 TextField {

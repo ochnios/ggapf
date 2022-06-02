@@ -78,6 +78,8 @@ public class Main extends Application {
         if(graph == null) {
             showPopup("Can't read from given file!");
         } else {
+            Main.resetFooter();
+            Dijkstra.reset();
             display.drawGraph(graph);
             showPopup("File opened");
         }
@@ -109,6 +111,26 @@ public class Main extends Application {
         graph.getShortestPath().setShortestPath(Dijkstra.findShortestPath(graph, 0, 1));
         System.out.println("SHORTEST PATH: " + graph.getShortestPath().getPathLength());
         return true;
+    }
+
+    public static void setStartNodeForDijkstra(int nodeNumber) {
+        Dijkstra.setEndNode(nodeNumber);
+        controller.setStartNodeInfo(nodeNumber);
+    }
+
+    public static void setEndNodeForDijkstra(int nodeNumber) {
+        Dijkstra.setEndNode(nodeNumber);
+        controller.setEndNodeInfo(nodeNumber);
+    }
+
+    public static void clearSelectionForDijkstra(int nodeNumber) {
+        display.clearSelection(nodeNumber);
+        Dijkstra.setStartNode(Graph.DEFAULT_NODE);
+        Dijkstra.setEndNode(Graph.DEFAULT_NODE);
+    }
+
+    public static void resetFooter() {
+        controller.resetFooter();
     }
 
 

@@ -11,6 +11,9 @@ public class Dijkstra extends ShortestPath {
 	static final int UNSEEN_NODE = 0;
 	static final int PREV_UNKNOWN = -1;
 
+    private static int startNode = Graph.DEFAULT_NODE;
+    private static int endNode = Graph.DEFAULT_NODE;
+
     public static ShortestPath findShortestPath(Graph graph, int beginNode, int endNode){
         ShortestPath shortestPath = new ShortestPath();
         shortestPath.setShortestPath(dijkstra(graph, beginNode, endNode));
@@ -89,6 +92,21 @@ public class Dijkstra extends ShortestPath {
         }
 
         return shortestPath;
+    }
+
+    public static void setStartNode(int nodeNumber) {
+        startNode = nodeNumber;
+    }
+
+    public static void setEndNode(int nodeNumber) {
+        endNode = nodeNumber;
+    }
+
+    public static void reset() {
+        startNode = Graph.DEFAULT_NODE;
+        endNode = Graph.DEFAULT_NODE;
+
+        // and others
     }
 
 }

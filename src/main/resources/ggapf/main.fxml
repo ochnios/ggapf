@@ -26,6 +26,9 @@
                      <HBox.margin>
                         <Insets left="15.0" />
                      </HBox.margin>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
                   </Button>
                   <TextField fx:id="resultFileField" editable="false" onMouseClicked="#resultFileFieldAction" prefHeight="32.0" prefWidth="150.0" text="result_file">
                      <HBox.margin>
@@ -39,6 +42,9 @@
                      <HBox.margin>
                         <Insets left="15.0" />
                      </HBox.margin>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
                   </Button>
                </children>
                <padding>
@@ -86,7 +92,10 @@
                         <Insets />
                      </HBox.margin>
                   </Pane>
-                  <Button fx:id="generateButton" alignment="CENTER" mnemonicParsing="false" onAction="#generateButtonAction" prefHeight="30.0" prefWidth="100.0" text="Generate" textAlignment="CENTER" />
+                  <Button fx:id="generateButton" alignment="CENTER" mnemonicParsing="false" onAction="#generateButtonAction" prefHeight="30.0" prefWidth="100.0" text="Generate" textAlignment="CENTER">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor></Button>
                </children>
                <padding>
                   <Insets bottom="10.0" left="30.0" right="60.0" top="10.0" />
@@ -128,7 +137,10 @@
                      </HBox.margin>
                   </Label>
                   <Pane prefHeight="28.0" prefWidth="116.0" HBox.hgrow="ALWAYS" />
-                  <Button fx:id="startButton" alignment="CENTER" mnemonicParsing="false" onAction="#startButtonAction" prefHeight="25.0" prefWidth="100.0" text="Start" textAlignment="CENTER" />
+                  <Button fx:id="startButton" alignment="CENTER" mnemonicParsing="false" onAction="#startButtonAction" prefHeight="25.0" prefWidth="100.0" text="Start" textAlignment="CENTER">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor></Button>
                </children>
                <padding>
                   <Insets bottom="20.0" left="30.0" right="60.0" top="10.0" />
@@ -143,26 +155,55 @@
       </VBox>
       <HBox id="footer" layoutY="728.0" prefHeight="42.0" prefWidth="1024.0">
          <children>
-            <Label prefHeight="27.0" prefWidth="180.0" text="Connected graph: ">
+            <Label prefHeight="25.0" prefWidth="151.0" text="Connected graph: ">
                <font>
                   <Font size="18.0" />
                </font>
             </Label>
-            <Label fx:id="connectedInfo" alignment="TOP_LEFT" prefHeight="27.0" prefWidth="74.0" styleClass="bold" text="---">
+            <Label fx:id="connectedInfo" alignment="TOP_LEFT" prefHeight="25.0" prefWidth="62.0" styleClass="bold" text="---">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
             </Label>
-            <Label prefHeight="27.0" prefWidth="136.0" text="ShortestPath:">
+            <Label prefHeight="25.0" prefWidth="113.0" text="ShortestPath:">
                <font>
                   <Font size="18.0" />
                </font>
             </Label>
-            <Label fx:id="shortestPathInfo1" prefHeight="27.0" prefWidth="178.0" styleClass="bold" text="unknown">
+            <Label fx:id="shortestPathInfo" prefHeight="25.0" prefWidth="89.0" styleClass="bold" text="---">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
             </Label>
+            <Pane prefHeight="28.0" prefWidth="116.0" />
+            <Label prefHeight="27.0" prefWidth="148.0" text="Start node (LMB):">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label fx:id="startNodeInfo" alignment="TOP_LEFT" prefHeight="27.0" prefWidth="74.0" styleClass="bold" text="---">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
+            <Label prefHeight="27.0" prefWidth="138.0" text="End node: (RMB)">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label fx:id="endNodeInfo" alignment="TOP_LEFT" prefHeight="27.0" prefWidth="74.0" styleClass="bold" text="---">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
+            <Button fx:id="resetButton" mnemonicParsing="false" onAction="#chosenNodesResetAction" prefHeight="18.0" prefWidth="80.0" text="Reset">
+               <HBox.margin>
+                  <Insets top="-2.0" />
+               </HBox.margin>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
          </children>
          <padding>
             <Insets bottom="12.0" left="30.0" right="30.0" top="8.0" />

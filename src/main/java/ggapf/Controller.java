@@ -15,6 +15,8 @@ import javafx.scene.layout.HBox;
 
 public class Controller implements Initializable {
 
+    private static final String INFO_PLACEHOLDER = "---";
+
     private Display display;
 
     @FXML
@@ -51,11 +53,15 @@ public class Controller implements Initializable {
     @FXML
     private TextField splitSubgraphsField;
 
-    // Informations sidebar
+    // Informations footer
     @FXML
     private Label connectedInfo;
     @FXML
     private Label shortestPathInfo;
+    @FXML
+    private Label startNodeInfo;
+    @FXML
+    private Label endNodeInfo;
 
     @FXML
     private void sourceFileFieldAction(MouseEvent event) {
@@ -119,13 +125,44 @@ public class Controller implements Initializable {
         }
     }
 
-    @Override
-    public void initialize(URL arg0, ResourceBundle arg1) {
-        System.out.println("Main controller initialize...");
+    @FXML
+    private void chosenNodesResetAction(ActionEvent event) {
+        chosenNodeReset(startNodeInfo);
+        chosenNodeReset(endNodeInfo);
+    }
+
+    private void chosenNodeReset(Label infoToReset) {
+        String nodeToReset = infoToReset.getText();
+        if(!nodeToReset.equals(INFO_PLACEHOLDER)) {
+            infoToReset.setText(INFO_PLACEHOLDER);
+            Main.clearSelectionForDijkstra(Integer.parseInt(nodeToReset));
+        }
     }
 
     public Display initDisplay() {
         display = new Display(canvasWrapper);
         return display;
+    }
+
+    public void resetFooter() {
+        connectedInfo.setText(INFO_PLACEHOLDER);
+        shortestPathInfo.setText(INFO_PLACEHOLDER);
+        startNodeInfo.setText(INFO_PLACEHOLDER);
+        endNodeInfo.setText(INFO_PLACEHOLDER);
+    }
+
+    public void setStartNodeInfo(int nodeNubmer) {
+        chosenNodeReset(startNodeInfo);
+        startNodeInfo.setText(Integer.toString(nodeNubmer));
+    }
+
+    public void setEndNodeInfo(int nodeNubmer) {
+        chosenNodeReset(endNodeInfo);
+        endNodeInfo.setText(Integer.toString(nodeNubmer));
+    }
+
+    @Override
+    public void initialize(URL arg0, ResourceBundle arg1) {
+        System.out.println("Main controller initialize...");
     }
 }

@@ -7,6 +7,13 @@ import java.util.LinkedList;
 import java.util.ArrayList;
 
 public class Graph {
+	static final int SEEN_NODE = 1;
+	static final int UNSEEN_NODE = 0;
+	static final int DEFAULT_NODE = -1;
+	static final double DEFAULT_WEIGHT = -1.0;
+	static final boolean CONNECTED_GRAPH = true;
+	static final boolean NOT_CONNECTED_GRAPH = false;
+	
 	private TreeMap<Integer, TreeMap<Integer, Double>> nodes; // adjacency list
 	private int rows;
 	private int columns;
@@ -15,14 +22,6 @@ public class Graph {
 	private Queue<Integer> queue; 
 	private ArrayList<Integer> seenNodes;
 	private ShortestPath shortestPath;
-
-
-	static final int SEEN_NODE = 1;
-	static final int UNSEEN_NODE = 0;
-	static final int DEFAULT_NODE = -1;
-	static final double DEFAULT_WEIGHT = -1.0;
-	static final boolean CONNECTED_GRAPH = true;
-	static final boolean NOT_CONNECTED_GRAPH = false;
 
 	public Graph(int rows, int columns) {
 		this.nodes = new TreeMap<Integer, TreeMap<Integer, Double>>();

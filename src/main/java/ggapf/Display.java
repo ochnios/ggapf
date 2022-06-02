@@ -2,6 +2,7 @@ package ggapf;
 
 import java.util.ArrayList;
 import javafx.event.EventHandler;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.HBox;
@@ -13,6 +14,7 @@ import javafx.scene.shape.Rectangle;
 
 public class Display {
     private static final Color NODE_FILL = Color.web("#efefef");
+    private static final Color SELECTED_NODE = Color.RED;
     private static final double BLUE_HUE = Color.BLUE.getHue();
     private static final double RED_HUE = Color.RED.getHue();
 
@@ -143,6 +145,11 @@ public class Display {
         System.gc();
     }
 
+    public void clearSelection(int nodeNumber) {
+        if(nodes.size() >= nodeNumber)
+            nodes.get(nodeNumber).setFill(NODE_FILL);
+    }
+
     private void addEventFilters() {
         canvasWrapper.addEventFilter( MouseEvent.MOUSE_PRESSED, sceneGestures.getOnMousePressedEventHandler());
         canvasWrapper.addEventFilter( MouseEvent.MOUSE_DRAGGED, sceneGestures.getOnMouseDraggedEventHandler());
@@ -176,7 +183,13 @@ public class Display {
         node.setId(Integer.toString(nodeNumber));
         node.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
             public void handle(MouseEvent event) {
-                System.out.println("Node " + node.getId() + " clicked!");
+                if(event.getButton() == MouseButton.PRIMARY) 
+                    Main.setStartNodeForDijkstra(nodeNumber);
+                else if(event.getButton() == MouseButton.SECONDARY)
+                    Main.setEndNodeForDijkstra(nodeNumber);
+
+                nodes.get(nodeNumber).setFill(SELECTED_NODE);
+
                 event.consume();
             }
         });
