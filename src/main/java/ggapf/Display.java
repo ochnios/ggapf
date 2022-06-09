@@ -2,6 +2,7 @@ package ggapf;
 
 import java.util.ArrayList;
 import javafx.event.EventHandler;
+import javafx.scene.Node;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
@@ -67,7 +68,7 @@ public class Display {
         min_weight = graph.getMinWeight();
         max_weight = graph.getMaxWeight();
         nodeRadius = calculateNodeRadius(graph.getRows(), graph.getColumns());
-        edgeLength = nodeRadius * 2;
+        edgeLength = nodeRadius * 4;
         edgeThickness = nodeRadius / 2;
         spaceBetweenNodesCentres = (2 * nodeRadius + edgeLength);
 
@@ -76,6 +77,7 @@ public class Display {
 
         int currentNodeNumber = 0;
         Double edgeWeight;
+        String edgeId;
 
         // draw nodes with edges - note that graph is bidirectional
         for(int i = 0; i < graph.getRows() - 1; i++) {
@@ -85,12 +87,14 @@ public class Display {
                 // draw right edge if exists
                 edgeWeight = graph.getEdgeWeight(currentNodeNumber, currentNodeNumber + 1);
                 if(edgeWeight != null) {
-                    edges.add(addRightEdge(nodeCenterX + nodeRadius, nodeCenterY, edgeWeight));
+                    edgeId = generateEdgeId(currentNodeNumber, currentNodeNumber + 1);
+                    edges.add(addRightEdge(nodeCenterX + nodeRadius, nodeCenterY, edgeWeight, edgeId));
                 }
                 // draw bottom edge if exists
                 edgeWeight = graph.getEdgeWeight(currentNodeNumber, currentNodeNumber + graph.getColumns());
                 if(edgeWeight != null) {
-                    edges.add(addBottomEdge(nodeCenterX, nodeCenterY + nodeRadius, edgeWeight));
+                    edgeId = generateEdgeId(currentNodeNumber, currentNodeNumber + graph.getColumns());
+                    edges.add(addBottomEdge(nodeCenterX, nodeCenterY + nodeRadius, edgeWeight, edgeId));
                 }
 
                 currentNodeNumber++;
@@ -101,7 +105,8 @@ public class Display {
             nodes.add(addNode(nodeCenterX, nodeCenterY, currentNodeNumber));
             edgeWeight = graph.getEdgeWeight(currentNodeNumber, currentNodeNumber + graph.getColumns());
             if(edgeWeight != null) {
-                edges.add(addBottomEdge(nodeCenterX, nodeCenterY + nodeRadius, edgeWeight));
+                edgeId = generateEdgeId(currentNodeNumber, currentNodeNumber + graph.getColumns());
+                edges.add(addBottomEdge(nodeCenterX, nodeCenterY + nodeRadius, edgeWeight, edgeId));
             }
             
             currentNodeNumber++;
@@ -116,15 +121,47 @@ public class Display {
             // draw right edge if exists
             edgeWeight = graph.getEdgeWeight(currentNodeNumber, currentNodeNumber + 1);
             if(edgeWeight != null) {
-                edges.add(addRightEdge(nodeCenterX + nodeRadius, nodeCenterY, edgeWeight));
+                edgeId = generateEdgeId(currentNodeNumber, currentNodeNumber + 1);
+                edges.add(addRightEdge(nodeCenterX + nodeRadius, nodeCenterY, edgeWeight, edgeId));
             }
 
             nodeCenterX += spaceBetweenNodesCentres;
             currentNodeNumber++;
         }
 
-        graphPane.getChildren().addAll(nodes);
         graphPane.getChildren().addAll(edges);
+        graphPane.getChildren().addAll(nodes);
+    }
+
+    public void drawPathThrough(ArrayList<Integer> nodesOnPath) {
+        if(nodesOnPath == null) return;
+        
+        int from;
+        int to;
+        String edgeId;
+
+        for(int i = 0; i < nodesOnPath.size() - 1; i++) {
+            from = nodesOnPath.get(i);
+            to = nodesOnPath.get(i + 1);
+            edgeId = generateEdgeId(from, to);
+            if(!boldEdge(edgeId)) {
+                // try in different way
+                edgeId = generateEdgeId(to, from);
+                boldEdge(edgeId);
+            }
+        }
+    }
+
+    private Boolean boldEdge(String edgeId) {
+        Node wanted = graphPane.lookup("#" + edgeId);
+        if(wanted != null) {
+            Line edge = (Line)wanted;
+            edge.setStroke(Color.WHITE);
+            edge.setStrokeWidth(edgeThickness * 2);
+            return true;
+        }
+
+        return false;
     }
 
     public void clearDisplay() {
@@ -168,8 +205,8 @@ public class Display {
     }
 
     private double calculateNodeRadius(int rows, int columns) {
-        double maxRadiusFromHeight = canvasWrapperHeight / ((rows + 1) * 4.0);
-        double maxRadiusFromWidth = canvasWrapperWidth / ((columns + 1) * 4.0);
+        double maxRadiusFromHeight = canvasWrapperHeight / ((rows + 1) * 6.0);
+        double maxRadiusFromWidth = canvasWrapperWidth / ((columns + 1) * 6.0);
 
         if(maxRadiusFromHeight < maxRadiusFromWidth) 
             return maxRadiusFromHeight;
@@ -197,16 +234,18 @@ public class Display {
         return node;
     }
 
-    private Line addRightEdge(double x, double y, double weight) {
+    private Line addRightEdge(double x, double y, double weight, String edgeId) {
         Line edge = new Line(x, y, x + edgeLength, y);
+        edge.setId(edgeId);
         edge.setStrokeWidth(edgeThickness);
         edge.setStroke(getColorForWeight(weight));
         edge.toBack();
         return edge;
     }
 
-    private Line addBottomEdge(double x, double y, double weight) {
+    private Line addBottomEdge(double x, double y, double weight, String edgeId) {
         Line edge = new Line(x, y, x, y + edgeLength);
+        edge.setId(edgeId);
         edge.setStrokeWidth(edgeThickness);
         edge.setStroke(getColorForWeight(weight));
         edge.toBack();
@@ -220,5 +259,9 @@ public class Display {
         }
         double hue = BLUE_HUE + (RED_HUE - BLUE_HUE) * (weight - min_weight) / (max_weight - min_weight) ;
         return Color.hsb(hue, 1.0, 1.0);
+    }
+
+    private String generateEdgeId(int from, int to) {
+        return new String(from + "to" + to);
     }
 }

@@ -119,7 +119,7 @@ public class Controller implements Initializable {
             String startNode = startNodeInfo.getText();
             String endNode = endNodeInfo.getText();
             if(Validator.isInteger(startNode) && Validator.isInteger((endNode))) {
-                ShortestPath shortestPath = Main.Dijkstra(Integer.parseInt(startNode), Integer.parseInt(endNode));
+                ShortestPath shortestPath = Main.dijkstra(Integer.parseInt(startNode), Integer.parseInt(endNode));
                 if(shortestPath == null) return;
 
                 if(shortestPath.getPathLength() == ShortestPath.INFINITY)
@@ -139,9 +139,9 @@ public class Controller implements Initializable {
     }
 
     @FXML
-    private void chosenNodesResetAction(ActionEvent event) {
-        chosenNodeReset(startNodeInfo);
-        chosenNodeReset(endNodeInfo);
+    private void resetButtonAction(ActionEvent event) {
+        Main.resetFooter();
+        Main.redrawGraph();
     }
 
     private void chosenNodeReset(Label infoToReset) {

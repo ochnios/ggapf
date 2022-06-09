@@ -101,7 +101,7 @@ public class Main extends Application {
             false;
     }
 
-    public static ShortestPath Dijkstra(int startNode, int endNode) {
+    public static ShortestPath dijkstra(int startNode, int endNode) {
         if(graph == null) {
             Main.showPopup("Load or generate a graph at first!");
             return null;
@@ -110,7 +110,14 @@ public class Main extends Application {
         ShortestPath shortestPath = Dijkstra.findShortestPath(graph, startNode, endNode);
         graph.setShortestPath(shortestPath);
 
+        display.drawPathThrough(shortestPath.getPath());
+
         return shortestPath;
+    }
+
+    public static void redrawGraph() {
+        if(graph != null)
+            display.drawGraph(graph);
     }
 
     public static void setStartNodeForDijkstra(int nodeNumber) {

@@ -1,6 +1,7 @@
 package ggapf;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.PriorityQueue;
 import java.util.Map;
 
@@ -27,7 +28,7 @@ public class Dijkstra extends ShortestPath {
 
         ArrayList<Double> distance = new ArrayList<Double>(nodesAmount);    // currently known shortest paths lengths
         ArrayList<Integer> seenNodes = new ArrayList<Integer>(nodesAmount); // marking examined nodes
-        ArrayList<Integer> previousNode = new ArrayList<Integer>(nodesAmount);
+        ArrayList<Integer> previousNodes = new ArrayList<Integer>(nodesAmount);
 
         PriorityQueue<NodeAndWeightPair> queue = new PriorityQueue<NodeAndWeightPair>(); 
 
@@ -38,7 +39,7 @@ public class Dijkstra extends ShortestPath {
 		for(int i = 0; i < nodesAmount; i++) {
 			seenNodes.add(UNSEEN_NODE);
             distance.add(Double.MAX_VALUE);
-            previousNode.add(PREV_UNKNOWN);
+            previousNodes.add(PREV_UNKNOWN);
 		}
 
         currentNode.setNode(beginNode);
@@ -46,7 +47,7 @@ public class Dijkstra extends ShortestPath {
         
         queue.add(currentNode);
         distance.set(beginNode, 0.0);
-        previousNode.set(beginNode, beginNode);
+        previousNodes.set(beginNode, beginNode);
 
         while( (queue.size() > 0) && (currentNode.getNode() != endNode) ) {
             currentNode = queue.poll();
@@ -62,7 +63,7 @@ public class Dijkstra extends ShortestPath {
                 
                 if(distance.get(examinedNode.getNode()) > newPathLength) {
                     distance.set(examinedNode.getNode(), newPathLength);
-                    previousNode.set(examinedNode.getNode(), currentNode.getNode());
+                    previousNodes.set(examinedNode.getNode(), currentNode.getNode());
                     examinedNode.setWeight(newPathLength);
                     queue.add(examinedNode);
                 }
@@ -71,9 +72,23 @@ public class Dijkstra extends ShortestPath {
 
         if(currentNode.getNode() == endNode) {
             shortestPath.setPathLength(distance.get(currentNode.getNode()));
-            shortestPath.setPath(previousNode);
+            shortestPath.setPath(backtrace(previousNodes, beginNode, endNode));
         }
 
         return shortestPath;
+    }
+
+    // returns list of nodes on shortest path from start to the end
+    private static ArrayList<Integer> backtrace(ArrayList<Integer> previousNodes, int begin, int end) {
+        ArrayList<Integer> nodesOnShortestPath = new ArrayList<Integer>();
+        int currentNode = end;
+        while(currentNode != begin) {
+            nodesOnShortestPath.add(currentNode);
+            currentNode = previousNodes.get(currentNode);
+        }
+        nodesOnShortestPath.add(begin);
+        
+        Collections.reverse(nodesOnShortestPath);
+        return nodesOnShortestPath;
     }
 }

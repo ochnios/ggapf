@@ -205,7 +205,7 @@
                   <Font name="System Bold" size="18.0" />
                </font>
             </Label>
-            <Button fx:id="resetButton" mnemonicParsing="false" onAction="#chosenNodesResetAction" prefHeight="18.0" prefWidth="80.0" text="Reset">
+            <Button fx:id="resetButton" mnemonicParsing="false" onAction="#resetButtonAction" prefHeight="18.0" prefWidth="80.0" text="Reset">
                <HBox.margin>
                   <Insets top="-2.0" />
                </HBox.margin>
