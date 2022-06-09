@@ -11,17 +11,14 @@ public class Dijkstra extends ShortestPath {
 	static final int PREV_UNKNOWN = -1;
 
     public static ShortestPath findShortestPath(Graph graph, int beginNode, int endNode){
-        ShortestPath shortestPath = new ShortestPath();
-        shortestPath.setShortestPath(dijkstra(graph, beginNode, endNode));
-        return shortestPath;
+        return dijkstra(graph, beginNode, endNode);
     }
 
     public static ShortestPath dijkstra(Graph graph, int beginNode, int endNode) {
         
         if(beginNode < 0 || beginNode >= graph.getNumberOfNodes() || endNode < 0 || endNode >= graph.getNumberOfNodes()) {
-            System.out.println("dijkstra(): given indexes out of range!");
-
-            //dodanie wywalenia programu
+            System.out.println("internal error: dijkstra(): given indexes out of range!");
+            return null;
         }
 
         ShortestPath shortestPath = new ShortestPath();
@@ -54,11 +51,9 @@ public class Dijkstra extends ShortestPath {
         while( (queue.size() > 0) && (currentNode.getNode() != endNode) ) {
             currentNode = queue.poll();
             seenNodes.set(currentNode.getNode(), SEEN_NODE);
-            //nodes.get(currentNode) = getEdges(currentNode)
+
             for (Map.Entry<Integer, Double> edge : graph.getEdges(currentNode.getNode()).entrySet()) {
-    
-                examinedNode.setNode(edge.getKey());
-                examinedNode.setWeight(edge.getValue());
+                examinedNode = new NodeAndWeightPair(edge.getKey(), edge.getValue());
     
                 if(examinedNode.getNode() == Graph.DEFAULT_NODE || seenNodes.get(examinedNode.getNode()) == Graph.SEEN_NODE)
                     continue;
@@ -72,16 +67,12 @@ public class Dijkstra extends ShortestPath {
                     queue.add(examinedNode);
                 }
             }
-
-
         }
 
         if(currentNode.getNode() == endNode) {
             shortestPath.setPathLength(distance.get(currentNode.getNode()));
             shortestPath.setPath(previousNode);
         }
-
-        System.out.println("in:" + shortestPath.getPathLength());
 
         return shortestPath;
     }

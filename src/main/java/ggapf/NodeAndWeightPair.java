@@ -4,9 +4,13 @@ public class NodeAndWeightPair implements Comparable<NodeAndWeightPair> {
     private int node;
     private double weight;
 
+    public NodeAndWeightPair(int node, double weight) {
+        this.node = node;
+        this.weight = weight;
+    }
+
     public NodeAndWeightPair() {
-        this.node = -1;
-        this.weight = 0.0;
+        this(Graph.DEFAULT_NODE, 0.0);
     }
 
     public int getNode() {

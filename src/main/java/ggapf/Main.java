@@ -110,8 +110,6 @@ public class Main extends Application {
         ShortestPath shortestPath = Dijkstra.findShortestPath(graph, startNode, endNode);
         graph.setShortestPath(shortestPath);
 
-        System.out.println("SHORTEST PATH: " + graph.getShortestPath().getPathLength());
-
         return shortestPath;
     }
 
