@@ -56,7 +56,7 @@ public class Main extends Application {
     }
 
     public static File chooseFile() {
-        File initialDirectory = new File(System.getProperty("user.dir"));
+        File initialDirectory = new File(System.getProperty("user.dir") + "/data");
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Open source File");
         fileChooser.getExtensionFilters().addAll(new ExtensionFilter("All Files", "*.*"));

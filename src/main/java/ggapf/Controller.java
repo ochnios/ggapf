@@ -66,9 +66,10 @@ public class Controller implements Initializable {
     @FXML
     private void sourceFileFieldAction(MouseEvent event) {
         selectedSourceFile = Main.chooseFile();
-        if(selectedSourceFile != null)
+        if(selectedSourceFile != null) {
             sourceFileField.setText(selectedSourceFile.getName());
-        else
+            Main.open(selectedSourceFile);
+        } else
             sourceFileField.setText("source_file");
     }
 

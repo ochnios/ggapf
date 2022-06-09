@@ -166,8 +166,7 @@ public class Display {
 
     public void clearDisplay() {
         if(graphPane.getChildren().size() > 0) {
-            graphPane.getChildren().removeAll(nodes);
-            graphPane.getChildren().removeAll(edges);
+            graphPane.getChildren().clear();
         }
 
         canvas.setScale(1.0);
@@ -178,7 +177,6 @@ public class Display {
 
         nodes = new ArrayList<Circle>();
         edges = new ArrayList<Line>();
-
         System.gc();
     }
 
