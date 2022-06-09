@@ -116,8 +116,21 @@ public class Controller implements Initializable {
             }
 
         } else if(dijkstraOption.isSelected()) {
-            Main.showPopup("DIJKSTRA...");
+            String startNode = startNodeInfo.getText();
+            String endNode = endNodeInfo.getText();
+            if(Validator.isInteger(startNode) && Validator.isInteger((endNode))) {
+                ShortestPath shortestPath = Main.Dijkstra(Integer.parseInt(startNode), Integer.parseInt(endNode));
+                if(shortestPath == null) return;
 
+                if(shortestPath.getPathLength() == ShortestPath.INFINITY)
+                    shortestPathInfo.setText("no exists");
+                else
+                    shortestPathInfo.setText(Double.toString(shortestPath.getPathLength()));
+
+            } else {
+                Main.showPopup("Please, choose the start and end node at first");
+            }
+            
         } else if(splitOption.isSelected()) {
             Main.showPopup("SPLITTER...");
         } else {

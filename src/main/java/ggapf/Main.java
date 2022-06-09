@@ -79,7 +79,6 @@ public class Main extends Application {
             showPopup("Can't read from given file!");
         } else {
             Main.resetFooter();
-            Dijkstra.reset();
             display.drawGraph(graph);
             showPopup("File opened");
         }
@@ -102,37 +101,35 @@ public class Main extends Application {
             false;
     }
 
-    public static Boolean DFS() {
+    public static ShortestPath Dijkstra(int startNode, int endNode) {
         if(graph == null) {
             Main.showPopup("Load or generate a graph at first!");
             return null;
         }
+        
+        ShortestPath shortestPath = Dijkstra.findShortestPath(graph, startNode, endNode);
+        graph.setShortestPath(shortestPath);
 
-        graph.getShortestPath().setShortestPath(Dijkstra.findShortestPath(graph, 0, 1));
         System.out.println("SHORTEST PATH: " + graph.getShortestPath().getPathLength());
-        return true;
+
+        return shortestPath;
     }
 
     public static void setStartNodeForDijkstra(int nodeNumber) {
-        Dijkstra.setEndNode(nodeNumber);
         controller.setStartNodeInfo(nodeNumber);
     }
 
     public static void setEndNodeForDijkstra(int nodeNumber) {
-        Dijkstra.setEndNode(nodeNumber);
         controller.setEndNodeInfo(nodeNumber);
     }
 
     public static void clearSelectionForDijkstra(int nodeNumber) {
         display.clearSelection(nodeNumber);
-        Dijkstra.setStartNode(Graph.DEFAULT_NODE);
-        Dijkstra.setEndNode(Graph.DEFAULT_NODE);
     }
 
     public static void resetFooter() {
         controller.resetFooter();
     }
-
 
     private static Parent loadFXML(String fxml) throws IOException {
         loader = new FXMLLoader(Main.class.getResource(fxml + ".fxml"));

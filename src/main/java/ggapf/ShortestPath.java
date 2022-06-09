@@ -6,9 +6,11 @@ public class ShortestPath {
     private double pathLength;
     private ArrayList<Integer> path;
 
+    static final double INFINITY = Double.MAX_VALUE;
+
     public ShortestPath(){
-        this.pathLength = 0.0;
-        this.path = new ArrayList<Integer>();
+        this.pathLength = INFINITY; // infinity by default
+        this.path = null;
     }
 
     public double getPathLength() {

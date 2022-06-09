@@ -2,7 +2,6 @@ package ggapf;
 
 import java.util.ArrayList;
 import java.util.PriorityQueue;
-import java.util.TreeMap;
 import java.util.Map;
 
 public class Dijkstra extends ShortestPath {
@@ -10,9 +9,6 @@ public class Dijkstra extends ShortestPath {
     static final int SEEN_NODE = 1;
 	static final int UNSEEN_NODE = 0;
 	static final int PREV_UNKNOWN = -1;
-
-    private static int startNode = Graph.DEFAULT_NODE;
-    private static int endNode = Graph.DEFAULT_NODE;
 
     public static ShortestPath findShortestPath(Graph graph, int beginNode, int endNode){
         ShortestPath shortestPath = new ShortestPath();
@@ -30,10 +26,7 @@ public class Dijkstra extends ShortestPath {
 
         ShortestPath shortestPath = new ShortestPath();
 
-        double pathLength = 0.0;
         int nodesAmount = graph.getNumberOfNodes();
-
-        int iterator;
 
         ArrayList<Double> distance = new ArrayList<Double>(nodesAmount);    // currently known shortest paths lengths
         ArrayList<Integer> seenNodes = new ArrayList<Integer>(nodesAmount); // marking examined nodes
@@ -86,27 +79,10 @@ public class Dijkstra extends ShortestPath {
         if(currentNode.getNode() == endNode) {
             shortestPath.setPathLength(distance.get(currentNode.getNode()));
             shortestPath.setPath(previousNode);
-        } else {
-            shortestPath.setPathLength(Double.MAX_VALUE);
-            shortestPath.setPath(null);
         }
+
+        System.out.println("in:" + shortestPath.getPathLength());
 
         return shortestPath;
     }
-
-    public static void setStartNode(int nodeNumber) {
-        startNode = nodeNumber;
-    }
-
-    public static void setEndNode(int nodeNumber) {
-        endNode = nodeNumber;
-    }
-
-    public static void reset() {
-        startNode = Graph.DEFAULT_NODE;
-        endNode = Graph.DEFAULT_NODE;
-
-        // and others
-    }
-
 }
