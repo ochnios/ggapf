@@ -20,7 +20,7 @@
          <children>
             <HBox prefHeight="60.0" prefWidth="1024.0">
                <children>
-                  <TextField fx:id="sourceFileField" editable="false" onMouseClicked="#sourceFileFieldAction" prefHeight="32.0" prefWidth="150.0" text="source_file">
+                  <TextField fx:id="sourceFileField" editable="false" onMouseClicked="#sourceFileFieldAction" prefHeight="32.0" prefWidth="200.0" text="source_file">
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor></TextField>
@@ -32,7 +32,7 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </Button>
-                  <TextField fx:id="resultFileField" editable="false" onMouseClicked="#resultFileFieldAction" prefHeight="32.0" prefWidth="150.0" text="result_file">
+                  <TextField fx:id="resultFileField" editable="false" onMouseClicked="#resultFileFieldAction" prefHeight="32.0" prefWidth="200.0" text="result_file">
                      <HBox.margin>
                         <Insets left="60.0" />
                      </HBox.margin>

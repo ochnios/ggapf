@@ -76,9 +76,12 @@ public class Controller implements Initializable {
     @FXML
     private void resultFileFieldAction(MouseEvent event) {
         selectedResultFile = Main.chooseFile();
-        if(selectedResultFile != null)
-            resultFileField.setText(selectedResultFile.getName());
-        else
+        if(selectedResultFile != null) {
+            File resultFileTemp = selectedResultFile;
+
+            resultFileField.setText(resultFileTemp.getName());
+            Main.save(resultFileTemp);
+        } else
             resultFileField.setText("result_file");
     }
 
@@ -94,8 +97,10 @@ public class Controller implements Initializable {
     private void saveButtonAction(ActionEvent event) {
         if(selectedResultFile == null)
             Main.showPopup("Please choose the coorect file at first");
-        else 
-            Main.save(selectedSourceFile);
+        else {
+            File resultFileTemp = selectedResultFile;
+            Main.save(resultFileTemp);
+        }
     }
 
     @FXML

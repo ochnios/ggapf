@@ -22,7 +22,6 @@ public class Main extends Application {
     private static Controller controller;
     private static Popup popup;
     private static Display display;
-    private static Reader reader;
     private static Graph graph;
 
     @Override
@@ -69,7 +68,7 @@ public class Main extends Application {
 
     public static void open(File selectedFile) {
         try {
-            reader = new Reader(selectedFile);
+            Reader reader = new Reader(selectedFile);
             graph = reader.readGraph();
         } catch (IOException e) {
             showPopup("Something went wrong while reading the file");
@@ -85,8 +84,19 @@ public class Main extends Application {
     }
 
     public static void save(File selectedFile) {
-        Main.showPopup("Writer not implemented yet...");
-        // run writer module
+        if(graph == null) {
+            showPopup("Load or generate a graph at first!");
+            return;
+        }
+
+        try {
+            Writer writer = new Writer(selectedFile, graph);
+            if(writer.saveGraph()) {
+                showPopup("Graph saved to the choosen file");
+            }
+        } catch (IOException e) {
+            showPopup("Something went wrong while saving the file");
+        }
     }
 
     public static Boolean BFS() {
