@@ -45,7 +45,6 @@ public class Controller implements Initializable {
     private TextField subgraphsField;
 
     // Option bar
-    // IMPORTANT: Radio buttons doesnt work properly - you can choose all of them at once
     @FXML
     private RadioButton bfsOption;
     @FXML
@@ -140,16 +139,16 @@ public class Controller implements Initializable {
             errorMessage += ("Incorrect subgraphs number!" + possibleRangeOfSubgraphs + " \n");
         }
 
-        if(errorMessage.isEmpty())
+        if(errorMessage.isEmpty()) {
             Main.generate(rows, columns, minWeight, maxWeight, subgraphs);
-        else 
+            Main.redrawGraph();
+        } else 
             Main.showPopup(errorMessage);
 
     }
 
     @FXML
     private void startButtonAction(ActionEvent event) {
-        // IMPORTANT: Radio buttons doesnt work properly - you can choose all of them at once
         if(bfsOption.isSelected()) {
             Boolean isConnected = Main.BFS();
             if(isConnected == null) {
@@ -180,7 +179,15 @@ public class Controller implements Initializable {
             }
             
         } else if(splitOption.isSelected()) {
-            Main.showPopup("SPLITTER...");
+            Integer subgraphs = Validator.parseSubgraphs(subgraphsField.getText());
+            if(subgraphs == null) {
+                String possibleRangeOfSubgraphs = "[" + Validator.MIN_SUBGRAPHS + " : " + Validator.MAX_SUBGRAPHS+ "]";
+                String message = ("Incorrect subgraphs number!" + possibleRangeOfSubgraphs + " \n");
+                Main.showPopup(message);
+            } else {
+                Main.split(subgraphs);
+                Main.redrawGraph();
+            }
         } else {
             Main.showPopup("You should choose action at first!");
         }

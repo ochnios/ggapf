@@ -78,8 +78,7 @@ public class Main extends Application {
             showPopup("Can't read from given file!");
         } else {
             Main.resetFooter();
-            display.drawGraph(graph);
-            controller.setHeatMapRange(graph.getMinWeight(), graph.getMaxWeight());
+            Main.redrawGraph();
         }
     }
 
@@ -102,8 +101,7 @@ public class Main extends Application {
     public static void generate(int rows, int columns, double minWeight, double maxWeight, int subgraphs) {
         graph = Generator.generate(rows, columns, minWeight, maxWeight, subgraphs);
         Main.resetFooter();
-        display.drawGraph(graph);
-        controller.setHeatMapRange(graph.getMinWeight(), graph.getMaxWeight());
+        Main.redrawGraph();
     }
 
     public static Boolean BFS() {
@@ -114,8 +112,8 @@ public class Main extends Application {
 
         if(graph.isGraphConnected(0)) 
             return true;
-        else return 
-            false;
+        else 
+            return false;
     }
 
     public static ShortestPath dijkstra(int startNode, int endNode) {
@@ -132,9 +130,20 @@ public class Main extends Application {
         return shortestPath;
     }
 
+    public static void split(int subgraphs) {
+        if(graph == null) {
+            Main.showPopup("Load or generate a graph at first!");
+            return;
+        }
+
+        graph = Splitter.split(graph, subgraphs);
+    }
+
     public static void redrawGraph() {
-        if(graph != null)
+        if(graph != null) {
             display.drawGraph(graph);
+            controller.setHeatMapRange(graph.getMinWeight(), graph.getMaxWeight());
+        }
     }
 
     public static void setStartNodeForDijkstra(int nodeNumber) {

@@ -30,6 +30,8 @@ public class Generator {
             }
         }
 
+        Splitter.split(graph, subgraphs);
+        
         return graph;
     }
 }
