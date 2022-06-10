@@ -17,8 +17,8 @@ public class Graph {
 	private TreeMap<Integer, TreeMap<Integer, Double>> nodes; // adjacency list
 	private int rows;
 	private int columns;
-	private double minWeight = 0.0; // TEMP
-	private double maxWeight = 10.0; // TEMP
+	private double minWeight = Double.MAX_VALUE;
+	private double maxWeight = Double.MIN_VALUE;
 	private Queue<Integer> queue; 
 	private ArrayList<Integer> seenNodes;
 	private ShortestPath shortestPath;
@@ -53,6 +53,11 @@ public class Graph {
 	}
 
 	public void addEdge(int from, int to, double weight) {
+		if(weight >= 0.0) {
+			if(weight < minWeight) minWeight = weight;
+			else if(weight > maxWeight) maxWeight = weight;
+		}
+		
 		if (!(nodes.containsKey(from)))
 			nodes.put(from, new TreeMap<Integer, Double>()); // add node
 
@@ -93,6 +98,14 @@ public class Graph {
 			}
 			System.out.print("\n");
 		}
+	}
+
+	public void setMinWeight(double weight) {
+		this.minWeight = weight;
+	}
+
+	public void setMaxWeight(double weight) {
+		this.maxWeight = weight;
 	}
 
 	public double getMinWeight() {
@@ -142,20 +155,14 @@ public class Graph {
 
 	public void lookForTheSurroundingNodes (int currentNode) {
 		
-		//nodes.get(currentNode) = getEdges(currentNode)
 		for (Map.Entry<Integer, Double> edge : getEdges(currentNode).entrySet()) {
 
 			if((edge.getKey() != DEFAULT_NODE) && (seenNodes.get(edge.getKey()) == UNSEEN_NODE)) {
 				queue.add(edge.getKey());
 				seenNodes.set(edge.getKey(), SEEN_NODE);
-				//System.out.println("Added: [" + edge.getKey() + "] to the queue.");
 			}
 
 		}
 
 	}
-
-	// TreeMap has removing by key (remove(Object key))
-	// we can add more methods as needed - double getMaxWeight(int from), int
-	// getMaxWeightNode(int from), getMin...
 }

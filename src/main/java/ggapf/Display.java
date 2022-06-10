@@ -37,8 +37,8 @@ public class Display {
     private double edgeThickness;
     private double spaceBetweenNodesCentres;
 
-    private double min_weight;
-    private double max_weight;
+    private double minWeight;
+    private double maxWeight;
 
     public Display(HBox canvasWrapper) {
         this.canvasWrapper = canvasWrapper;
@@ -65,8 +65,8 @@ public class Display {
     public void drawGraph(Graph graph) {
         clearDisplay();
 
-        min_weight = graph.getMinWeight();
-        max_weight = graph.getMaxWeight();
+        minWeight = graph.getMinWeight();
+        maxWeight = graph.getMaxWeight();
         nodeRadius = calculateNodeRadius(graph.getRows(), graph.getColumns());
         edgeLength = nodeRadius * 4;
         edgeThickness = nodeRadius / 2;
@@ -157,7 +157,7 @@ public class Display {
         if(wanted != null) {
             Line edge = (Line)wanted;
             edge.setStroke(Color.WHITE);
-            edge.setStrokeWidth(edgeThickness * 2);
+            edge.setStrokeWidth(edgeThickness * 3);
             return true;
         }
 
@@ -181,8 +181,11 @@ public class Display {
     }
 
     public void clearSelection(int nodeNumber) {
-        if(nodes.size() >= nodeNumber)
-            nodes.get(nodeNumber).setFill(NODE_FILL);
+        if(nodes.size() >= nodeNumber) {
+            Circle selected = nodes.get(nodeNumber);
+            selected.setFill(NODE_FILL);
+            selected.setRadius(nodeRadius);
+        }
     }
 
     private void addEventFilters() {
@@ -223,7 +226,9 @@ public class Display {
                 else if(event.getButton() == MouseButton.SECONDARY)
                     Main.setEndNodeForDijkstra(nodeNumber);
 
-                nodes.get(nodeNumber).setFill(SELECTED_NODE);
+                Circle selected = nodes.get(nodeNumber);
+                selected.setFill(SELECTED_NODE);
+                selected.setRadius(nodeRadius * 2);
 
                 event.consume();
             }
@@ -252,10 +257,10 @@ public class Display {
     }
 
     private Color getColorForWeight(double weight) {
-        if (weight <  min_weight || weight > max_weight) {
+        if (weight <  minWeight || weight > maxWeight) {
             return Color.BLACK ;
         }
-        double hue = BLUE_HUE + (RED_HUE - BLUE_HUE) * (weight - min_weight) / (max_weight - min_weight) ;
+        double hue = BLUE_HUE + (RED_HUE - BLUE_HUE) * (weight - minWeight) / (maxWeight - minWeight) ;
         return Color.hsb(hue, 1.0, 1.0);
     }
 

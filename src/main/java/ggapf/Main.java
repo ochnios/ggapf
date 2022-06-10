@@ -79,7 +79,7 @@ public class Main extends Application {
         } else {
             Main.resetFooter();
             display.drawGraph(graph);
-            showPopup("File opened");
+            controller.setHeatMapRange(graph.getMinWeight(), graph.getMaxWeight());
         }
     }
 
@@ -97,6 +97,13 @@ public class Main extends Application {
         } catch (IOException e) {
             showPopup("Something went wrong while saving the file");
         }
+    }
+
+    public static void generate(int rows, int columns, double minWeight, double maxWeight, int subgraphs) {
+        graph = Generator.generate(rows, columns, minWeight, maxWeight, subgraphs);
+        Main.resetFooter();
+        display.drawGraph(graph);
+        controller.setHeatMapRange(graph.getMinWeight(), graph.getMaxWeight());
     }
 
     public static Boolean BFS() {

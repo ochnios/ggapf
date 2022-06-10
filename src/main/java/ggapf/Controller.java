@@ -2,6 +2,9 @@ package ggapf;
 
 import java.io.File;
 import java.net.URL;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.util.Locale;
 import java.util.ResourceBundle;
 
 import javafx.event.ActionEvent;
@@ -63,6 +66,12 @@ public class Controller implements Initializable {
     @FXML
     private Label endNodeInfo;
 
+    // Heatmap
+    @FXML
+    private Label minWeightHeatmap;
+    @FXML
+    private Label maxWeightHeatmap;
+
     @FXML
     private void sourceFileFieldAction(MouseEvent event) {
         selectedSourceFile = Main.chooseFile();
@@ -105,7 +114,38 @@ public class Controller implements Initializable {
 
     @FXML
     private void generateButtonAction(ActionEvent event) {
-        Main.showPopup("GENERATE");
+        Integer rows = Validator.parseSize(rowsField.getText());
+        Integer columns = Validator.parseSize(columnsField.getText());
+        Double minWeight = Validator.parseWeight(minWeightField.getText());
+        Double maxWeight = Validator.parseWeight(maxWeightField.getText());
+        Integer subgraphs = Validator.parseSubgraphs(subgraphsField.getText());
+
+        String errorMessage = new String();
+
+        if(rows == null || columns == null) {
+            String possibleRangeOfSize = "[" + Validator.MIN_GRAPH_SIZE + " : " + Validator.MAX_GRAPH_SIZE + "]";
+            errorMessage += ("Incorrect number of rows! Possible range: " + possibleRangeOfSize + " \n");
+        }
+
+        if(minWeight == null || maxWeight == null) {
+            String possibleRangeOfWeight = "[" + Validator.MIN_WEIGHT + " : " + Validator.MAX_WEIGHT+ "]";
+            errorMessage += ("Incorrect weights! Possible range: " + possibleRangeOfWeight + " \n");
+        } else {
+            if(minWeight >= maxWeight) {
+                errorMessage += "First weight should be less than second!\n";
+            }
+        }
+
+        if(subgraphs == null) {
+            String possibleRangeOfSubgraphs = "[" + Validator.MIN_SUBGRAPHS + " : " + Validator.MAX_SUBGRAPHS+ "]";
+            errorMessage += ("Incorrect subgraphs number!" + possibleRangeOfSubgraphs + " \n");
+        }
+
+        if(errorMessage.isEmpty())
+            Main.generate(rows, columns, minWeight, maxWeight, subgraphs);
+        else 
+            Main.showPopup(errorMessage);
+
     }
 
     @FXML
@@ -130,9 +170,12 @@ public class Controller implements Initializable {
 
                 if(shortestPath.getPathLength() == ShortestPath.INFINITY)
                     shortestPathInfo.setText("no exists");
-                else
-                    shortestPathInfo.setText(Double.toString(shortestPath.getPathLength()));
-
+                else {
+                    DecimalFormatSymbols symbols = new DecimalFormatSymbols();
+                    symbols.setDecimalSeparator('.');
+                    DecimalFormat format = new DecimalFormat("#.##", symbols);
+                    shortestPathInfo.setText(format.format(shortestPath.getPathLength()));
+                }
             } else {
                 Main.showPopup("Please, choose the start and end node at first");
             }
@@ -178,6 +221,14 @@ public class Controller implements Initializable {
     public void setEndNodeInfo(int nodeNubmer) {
         chosenNodeReset(endNodeInfo);
         endNodeInfo.setText(Integer.toString(nodeNubmer));
+    }
+
+    public void setHeatMapRange(double min, double max) {
+        DecimalFormatSymbols symbols = new DecimalFormatSymbols();
+        symbols.setDecimalSeparator('.');
+        DecimalFormat format = new DecimalFormat("#.##", symbols);
+        minWeightHeatmap.setText(format.format(min));
+        maxWeightHeatmap.setText(format.format(max));
     }
 
     @Override
