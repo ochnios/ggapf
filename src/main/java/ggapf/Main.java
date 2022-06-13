@@ -12,7 +12,7 @@ import java.io.File;
 import java.io.IOException;
 
 /**
- * JavaFX App
+ * JavaFX App - Main class
  */
 public class Main extends Application {
 
@@ -46,14 +46,25 @@ public class Main extends Application {
         popup = new Popup(scene);
     }
 
+    /**
+     * Shows popup window with given message
+     * @param message message to be shown
+     */
     public static void showPopup(String message) {
         popup.show(message);
     }
     
+    /**
+     * Hides popup window
+     */
     public static void hidePopup() {
         popup.hide();
     }
 
+    /**
+     * Opens FileChooser window
+     * @return the file selected by user
+     */
     public static File chooseFile() {
         File initialDirectory = new File(System.getProperty("user.dir") + "/data");
         FileChooser fileChooser = new FileChooser();
@@ -66,6 +77,12 @@ public class Main extends Application {
         return selectedFile; 
     }
 
+    /**
+     * Tries to open the file selected by user.
+     * Performs graph drawing.
+     * @param selectedFile the file to be opened
+     * @see Display
+     */
     public static void open(File selectedFile) {
         try {
             Reader reader = new Reader(selectedFile);
@@ -82,6 +99,10 @@ public class Main extends Application {
         }
     }
 
+    /**
+     * Tries to save graph to the file selected by user
+     * @param selectedFile file to be saved
+     */
     public static void save(File selectedFile) {
         if(graph == null) {
             showPopup("Load or generate a graph at first!");
@@ -98,12 +119,27 @@ public class Main extends Application {
         }
     }
 
+    /**
+     * Runs graph generator with the given parameters.
+     * After graph generation performs graph display.
+     * @param rows rows number
+     * @param columns columns number
+     * @param minWeight minimal edge weight
+     * @param maxWeight maximal edge weight
+     * @param subgraphs number of subgraphs
+     * @see Display
+     */
     public static void generate(int rows, int columns, double minWeight, double maxWeight, int subgraphs) {
         graph = Generator.generate(rows, columns, minWeight, maxWeight, subgraphs);
         Main.resetFooter();
         Main.redrawGraph();
     }
 
+    /**
+     * Runs BFS algorithm on the graph
+     * @return true when graph is connected, false in the other case
+     * @see Graph
+     */
     public static Boolean BFS() {
         if(graph == null) {
             Main.showPopup("Load or generate a graph at first!");
@@ -116,6 +152,16 @@ public class Main extends Application {
             return false;
     }
 
+    /**
+     * Runs Dijkstra algorithm on the graph.
+     * Performs shortest path drawing.
+     * @param startNode start node
+     * @param endNode end node
+     * @return ShortestPath object
+     * @see Dijkstra
+     * @see ShortestPath
+     * @see Display
+     */
     public static ShortestPath dijkstra(int startNode, int endNode) {
         if(graph == null) {
             Main.showPopup("Load or generate a graph at first!");
@@ -130,6 +176,11 @@ public class Main extends Application {
         return shortestPath;
     }
 
+    /**
+     * Runs splitter on the graph
+     * @param subgraphs number of subgraphs to be splitted
+     * @see Splitter
+     */
     public static void split(int subgraphs) {
         if(graph == null) {
             Main.showPopup("Load or generate a graph at first!");
@@ -138,7 +189,9 @@ public class Main extends Application {
 
         graph = Splitter.split(graph, subgraphs);
     }
-
+    /**
+     * Redraws graph on the screen
+     */
     public static void redrawGraph() {
         if(graph != null) {
             display.drawGraph(graph);
@@ -146,27 +199,52 @@ public class Main extends Application {
         }
     }
 
+    /**
+     * Sets start node for the Dijkstra algorithm
+     * @param nodeNumber start node number
+     */
     public static void setStartNodeForDijkstra(int nodeNumber) {
         controller.setStartNodeInfo(nodeNumber);
     }
 
+    /**
+     * Sets end node for the Dijkstra algorithm
+     * @param nodeNumber end node number
+     */
     public static void setEndNodeForDijkstra(int nodeNumber) {
         controller.setEndNodeInfo(nodeNumber);
     }
 
+    /**
+     * Clears selection
+     * @param nodeNumber selected node number
+     */
     public static void clearSelectionForDijkstra(int nodeNumber) {
         display.clearSelection(nodeNumber);
     }
 
+    /**
+     * Reset values in footer to defaults
+     */
     public static void resetFooter() {
         controller.resetFooter();
     }
 
+    /**
+     * Loads fxml
+     * @param fxml name of the FXML file
+     * @return parent node
+     * @throws IOException
+     */
     private static Parent loadFXML(String fxml) throws IOException {
         loader = new FXMLLoader(Main.class.getResource(fxml + ".fxml"));
         return loader.load();
     }
 
+    /**
+     * The entry point to the application
+     * @param args command line arguments
+     */
     public static void main(String[] args) {
         launch();
     }

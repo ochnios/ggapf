@@ -5,6 +5,9 @@ import java.util.Collections;
 import java.util.PriorityQueue;
 import java.util.Map;
 
+/**
+ * The implemetation of Dijkstra algorithm
+ */
 public class Dijkstra extends ShortestPath {
 
     static final int SEEN_NODE = 1;

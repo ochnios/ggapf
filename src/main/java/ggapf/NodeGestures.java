@@ -4,18 +4,15 @@ import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.input.MouseEvent;
 
-/* IMPORTANT!
- * PannableCanvas.java
- * DragContext.java
- * NodeGestures.java
- * SceneGestures.java
- * 
- * Adapted from https://stackoverflow.com/questions/29506156/javafx-8-zooming-relative-to-mouse-pointer
- */
-
 /**
  * Listeners for making the nodes draggable via left mouse button. Considers if parent is zoomed.
+ * Adapted from <a href="https://stackoverflow.com/questions/29506156/javafx-8-zooming-relative-to-mouse-pointer">Stackoverflow</a>
+ * @see PannableCanvas
+ * @see DragContext
+ * @see NodeGestures
+ * @see SceneGestures
  */
+
 public class NodeGestures {
     private DragContext nodeDragContext = new DragContext();
 

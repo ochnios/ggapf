@@ -6,6 +6,9 @@ import java.util.Queue;
 import java.util.LinkedList;
 import java.util.ArrayList;
 
+/**
+ * Stores graph
+ */
 public class Graph {
 	static final int SEEN_NODE = 1;
 	static final int UNSEEN_NODE = 0;
@@ -23,6 +26,11 @@ public class Graph {
 	private ArrayList<Integer> seenNodes;
 	private ShortestPath shortestPath;
 
+	/**
+	 * Graph constructor - creates graph with given parameters
+	 * @param rows number of rows
+	 * @param columns number of columns
+	 */
 	public Graph(int rows, int columns) {
 		this.nodes = new TreeMap<Integer, TreeMap<Integer, Double>>();
 		this.queue = new LinkedList<Integer>();
@@ -32,26 +40,51 @@ public class Graph {
 		this.shortestPath = new ShortestPath();
 	}
 
+	/**
+	 * @return number of rows
+	 */
 	public int getRows() {
 		return rows;
 	}
 
+	/**
+	 * @return number of columns
+	 */
 	public int getColumns() {
 		return columns;
 	}
 
+	/**
+	 * @return number of nodes
+	 */
 	public int getNumberOfNodes() {
 		return nodes.size();
 	}
 
+	/**
+	 * @return the shortest path calculated by Dijkstra
+	 * @see ShortestPath
+	 * @see Dijkstra
+	 */
 	public ShortestPath getShortestPath() {
 		return this.shortestPath;
 	}
 
+	/**
+	 * Sets graphs shortest path
+	 * @param shortestPath the shortest path in the graph
+	 * @see ShortestPath
+	 */
 	public void setShortestPath(ShortestPath shortestPath) {
 		this.shortestPath = shortestPath;
 	}
 
+	/**
+	 * Adds edge to graph
+	 * @param from start node of the edge
+	 * @param to end node of the edge
+	 * @param weight weight of the edge
+	 */
 	public void addEdge(int from, int to, double weight) {
 		if(weight >= 0.0) {
 			if(weight < minWeight) minWeight = weight;
@@ -67,6 +100,12 @@ public class Graph {
 			nodes.get(from).put(to, weight);
 	}
 
+	/**
+	 * Gets edge weight
+	 * @param from start node of the edge
+	 * @param to end node of the edge
+	 * @return weith of the edge or null if edge doesn't exist
+	 */
 	public Double getEdgeWeight(int from, int to) {
 		if (nodes.containsKey(from)) {
 			if (nodes.get(from).containsKey(to)) {
@@ -77,6 +116,11 @@ public class Graph {
 		return null;
 	}
 
+	/**
+	 * Gets all edges outgoing from specific node
+	 * @param from number of node
+	 * @return TreeMap with edges outgoing from the given node or null when node doesn't exist
+	 */
 	public TreeMap<Integer, Double> getEdges(int from) {
 		if (nodes.containsKey(from)) {
 			return nodes.get(from);
@@ -85,10 +129,17 @@ public class Graph {
 		return null;
 	}
 
+	/**
+	 * Gets the entire adjacency list
+	 * @return TreeMap that represents the entire adjacency list
+	 */
 	public TreeMap<Integer, TreeMap<Integer, Double>> getNodes() {
 		return this.nodes;
 	}
 
+	/**
+	 * Prints adjacency list on System.out
+	 */
 	public void print() {
 		System.out.println(rows + " " + columns);
 		for (Map.Entry<Integer, TreeMap<Integer, Double>> row : nodes.entrySet()) {
@@ -100,18 +151,34 @@ public class Graph {
 		}
 	}
 
+	/**
+	 * Sets minimal weight in the graph
+	 * @param weight weight to be set
+	 */
 	public void setMinWeight(double weight) {
 		this.minWeight = weight;
 	}
 
+	/**
+	 * Sets maximal weight in the graph
+	 * @param weight weight to be set
+	 */
 	public void setMaxWeight(double weight) {
 		this.maxWeight = weight;
 	}
 
+	/**
+	 * Gets minimal weight in the graph
+	 * @return minimal weight in the graph
+	 */
 	public double getMinWeight() {
 		return minWeight;
 	}
 
+	/**
+	 * Gets maximal weight in the graph
+	 * @return maximal weight in the graph
+	 */
 	public double getMaxWeight() {
 		return maxWeight;
 	}

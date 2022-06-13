@@ -15,6 +15,10 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 
+/**
+ * The main Controller class responsible for handling the GUI.
+ * GUI elements are defined by FXML injection.
+ */
 public class Controller implements Initializable {
 
     private static final String INFO_PLACEHOLDER = "---";
@@ -71,6 +75,10 @@ public class Controller implements Initializable {
     private Label maxWeightHeatmap;
 
     @FXML
+    /**
+     * Runs FileChooser window when the source_file field is clicked.
+     * @param event
+     */
     private void sourceFileFieldAction(MouseEvent event) {
         selectedSourceFile = Main.chooseFile();
         if(selectedSourceFile != null) {
@@ -81,6 +89,10 @@ public class Controller implements Initializable {
     }
 
     @FXML
+    /**
+     * Runs FileChooser window when the result_file field is clicked.
+     * @param event
+     */
     private void resultFileFieldAction(MouseEvent event) {
         selectedResultFile = Main.chooseFile();
         if(selectedResultFile != null) {
@@ -93,6 +105,12 @@ public class Controller implements Initializable {
     }
 
     @FXML
+    /**
+     * Tries to (re)open selected source_file.
+     * On fail shows error message in a popup window.
+     * @param event
+     * @see Popup
+     */
     private void openButtonAction(ActionEvent event) {
         if(selectedSourceFile == null)
             Main.showPopup("Please choose the coorect file at first");
@@ -101,6 +119,12 @@ public class Controller implements Initializable {
     }
 
     @FXML
+    /**
+     * Tries to save loaded or generated graph to the result_file.
+     * On fail shows error message in a popup window.
+     * @param event
+     * @see Popup
+     */
     private void saveButtonAction(ActionEvent event) {
         if(selectedResultFile == null)
             Main.showPopup("Please choose the coorect file at first");
@@ -111,6 +135,12 @@ public class Controller implements Initializable {
     }
 
     @FXML
+    /**
+     * Generates graph with parameters defined by user in GUI fields.
+     * On fail shows error message in a popup window.
+     * @param event
+     * @see Popup
+     */
     private void generateButtonAction(ActionEvent event) {
         Integer rows = Validator.parseSize(rowsField.getText());
         Integer columns = Validator.parseSize(columnsField.getText());
@@ -148,6 +178,14 @@ public class Controller implements Initializable {
     }
 
     @FXML
+    /**
+     * Perfoms an action selected in the GUI - runs Dijkstra, BFS or Split
+     * When the user did not select an action, shows popup window
+     * @param event
+     * @see Popup
+     * @see Dijkstra
+     * @see Splitter
+     */
     private void startButtonAction(ActionEvent event) {
         if(bfsOption.isSelected()) {
             Boolean isConnected = Main.BFS();
@@ -194,11 +232,18 @@ public class Controller implements Initializable {
     }
 
     @FXML
+    /*
+     * Resets informations in footer and redraws graph
+     */
     private void resetButtonAction(ActionEvent event) {
         Main.resetFooter();
         Main.redrawGraph();
     }
 
+    /**
+     * Resets given infoToReset Label which contain number of selected the start or the end node
+     * @param infoToReset the Label to be reset
+     */
     private void chosenNodeReset(Label infoToReset) {
         String nodeToReset = infoToReset.getText();
         if(!nodeToReset.equals(INFO_PLACEHOLDER)) {
@@ -207,11 +252,18 @@ public class Controller implements Initializable {
         }
     }
 
+    /**
+     * Initializes a Display object - the place where graph will be displayed
+     * @return The initializated display object 
+     */
     public Display initDisplay() {
         display = new Display(canvasWrapper);
         return display;
     }
 
+    /**
+     * Resets informations about graph in footer
+     */
     public void resetFooter() {
         connectedInfo.setText(INFO_PLACEHOLDER);
         shortestPathInfo.setText(INFO_PLACEHOLDER);
@@ -219,16 +271,29 @@ public class Controller implements Initializable {
         endNodeInfo.setText(INFO_PLACEHOLDER);
     }
 
-    public void setStartNodeInfo(int nodeNubmer) {
+    /**
+     * Sets information about start node number in the footer
+     * @param nodeNumber start node number
+     */
+    public void setStartNodeInfo(int nodeNumber) {
         chosenNodeReset(startNodeInfo);
-        startNodeInfo.setText(Integer.toString(nodeNubmer));
+        startNodeInfo.setText(Integer.toString(nodeNumber));
     }
 
-    public void setEndNodeInfo(int nodeNubmer) {
+    /**
+     * Sets the information about start node number in the footer
+     * @param nodeNumber end node number
+     */
+    public void setEndNodeInfo(int nodeNumber) {
         chosenNodeReset(endNodeInfo);
-        endNodeInfo.setText(Integer.toString(nodeNubmer));
+        endNodeInfo.setText(Integer.toString(nodeNumber));
     }
 
+    /**
+     * Sets the boundary values of edges weights on the heatmap
+     * @param min minimum weight in the graph
+     * @param max maximium weight in the graph
+     */
     public void setHeatMapRange(double min, double max) {
         DecimalFormatSymbols symbols = new DecimalFormatSymbols();
         symbols.setDecimalSeparator('.');

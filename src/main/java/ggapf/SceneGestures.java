@@ -4,18 +4,15 @@ import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
 
-/* IMPORTANT!
- * PannableCanvas.java
- * DragContext.java
- * NodeGestures.java
- * SceneGestures.java
- * 
- * Adapted from https://stackoverflow.com/questions/29506156/javafx-8-zooming-relative-to-mouse-pointer
- */
-
 /**
  * Listeners for making the scene's canvas draggable and zoomable
+ * Adapted from <a href="https://stackoverflow.com/questions/29506156/javafx-8-zooming-relative-to-mouse-pointer">Stackoverflow</a>
+ * @see PannableCanvas
+ * @see DragContext
+ * @see NodeGestures
+ * @see SceneGestures
  */
+
 public class SceneGestures {
 
     private static final double MAX_SCALE = 10.0d;
