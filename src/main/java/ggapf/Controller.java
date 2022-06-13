@@ -179,7 +179,7 @@ public class Controller implements Initializable {
             }
             
         } else if(splitOption.isSelected()) {
-            Integer subgraphs = Validator.parseSubgraphs(subgraphsField.getText());
+            Integer subgraphs = Validator.parseSubgraphs(splitSubgraphsField.getText());
             if(subgraphs == null) {
                 String possibleRangeOfSubgraphs = "[" + Validator.MIN_SUBGRAPHS + " : " + Validator.MAX_SUBGRAPHS+ "]";
                 String message = ("Incorrect subgraphs number!" + possibleRangeOfSubgraphs + " \n");
