@@ -204,8 +204,6 @@ public class Graph {
 
 		boolean connectedGraph = lookIfEveryNodeHasBeenVisited();
 
-		System.out.println("IS GRAPH CONNECTED?: " + connectedGraph);
-
 		return connectedGraph;
 	}
 
