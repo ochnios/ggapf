@@ -52,11 +52,14 @@ public class Splitter {
 
             do {
                 endNode = randomNode(nodesAmount);
-            } while( !(isOnTheEdge(graph, endNode)) && (seenNodes.get(endNode) == Graph.SEEN_NODE));
+                //System.out.println("siema");
+            } while( !(isOnTheEdge(graph, endNode)) || (seenNodes.get(endNode) != Graph.SEEN_NODE) 
+                    || (startingNode == endNode) || ( (endNode % graph.getColumns()) == (startingNode % graph.getColumns()) ) 
+                    || ((endNode > startingNode) && (endNode <= startingNode + graph.getRows())));
 
             shortestPath = Dijkstra.findShortestPath(graph, startingNode, endNode);
 
-            System.out.println("splitter() - start");
+            //System.out.println("splitter() - start");
 
             splitter(graph, shortestPath.getPath(), seenNodes);
             
@@ -74,20 +77,21 @@ public class Splitter {
         int columns = graph.getColumns();
         int rows = graph.getRows();
         int roadSize = previousNodes.size();
-        int currentNode;
-        int endNode;
-        int followingNode;
-        int nodeToCut;
+        Integer currentNode;
+        Integer endNode;
+        Integer followingNode;
+        Integer nodeToCut;
         int way;
         int mode = EDGE_CASE;
         ArrayList<Integer> road = new ArrayList<>(nodesAmount);
+        Queue<Integer> queue = new LinkedList<Integer>(); 
 
-        System.out.println("SPLITO STARTO");
+        //System.out.println("SPLITO STARTO");
 
         for(int i = 0; i < nodesAmount; i++)
             road.add(NOT_ON_THE_ROAD);
 
-        System.out.println("Added.");
+        //System.out.println("Added.");
 
         currentNode = previousNodes.get(0);
         endNode = previousNodes.get(roadSize - 1);
@@ -95,29 +99,29 @@ public class Splitter {
         road.set(currentNode, ON_THE_ROAD);
         road.set(endNode, ON_THE_ROAD);
 
-        System.out.println("startingNode: " + currentNode + " endNode: " + endNode);
+        //System.out.println("startingNode: " + currentNode + " endNode: " + endNode);
 
-        for(int i = 0; i < roadSize; i++)
-            System.out.print(i + "[" + previousNodes.get(i) + "], ");
+        //for(int i = 0; i < roadSize; i++)
+        //    System.out.print(i + "[" + previousNodes.get(i) + "], ");
 
         for(int i = 0; i < roadSize; i++) {
 
             currentNode = previousNodes.get(i);
-            System.out.println("currentNode:" + currentNode);
+            //System.out.println("currentNode:" + currentNode);
             road.set(currentNode, ON_THE_ROAD);
 
         }
 
-        System.out.println("everything ready to go");
+        //System.out.println("everything ready to go");
 
         currentNode = previousNodes.get(0);
 
         for(int i = 0; i < roadSize; i++) {
 
-            System.out.println("CASE DEFINING");
+            //System.out.println("CASE DEFINING");
 
             if( ((currentNode % columns) == (columns - 1)) || ((currentNode < columns)) ) {
-                currentNode = previousNodes.get(currentNode);
+                currentNode = previousNodes.get(i);
             }
             else {
                 mode = NORMAL_CASE;
@@ -130,24 +134,24 @@ public class Splitter {
 
         if( mode == NORMAL_CASE ) {
 
-            System.out.println("NORMAL CASE STARTO");
+            //System.out.println("NORMAL CASE STARTO");
 
             for (Map.Entry<Integer, Double> edge : graph.getEdges(currentNode).entrySet()) {
                 nodeToCut = edge.getKey();
+
+                //System.out.println("NodeTOCUTTT " + nodeToCut);
     
                 if( (nodeToCut != Graph.DEFAULT_NODE) && (road.get(nodeToCut) == NOT_ON_THE_ROAD) ) {
+                    queue.add(nodeToCut);
 
-                    if(graph.getEdges(currentNode).containsKey(nodeToCut))
-                        graph.getEdges(currentNode).remove(nodeToCut);
-                
-                    if(graph.getEdges(nodeToCut).containsKey(currentNode))
-                        graph.getEdges(nodeToCut).remove(currentNode);
-                
+                    //System.out.println("added to queue. " + nodeToCut); 
                 }
 
             }
 
-            System.out.println("FIRST CUT LATER");
+            removeEdges(graph, queue, currentNode);
+
+            //System.out.println("FIRST CUT LATER");
 
             for(int i = 0; i < roadSize - 1; i++) {
             
@@ -196,27 +200,30 @@ public class Splitter {
 
             }
 
-            System.out.println("CUT.");
+            //System.out.println("CUT.");
 
             for (Map.Entry<Integer, Double> edge : graph.getEdges(endNode).entrySet()) {
                 nodeToCut = edge.getKey();
     
                 if( (nodeToCut != Graph.DEFAULT_NODE) && (road.get(nodeToCut) == NOT_ON_THE_ROAD) ) {
 
-                    if(graph.getEdges(endNode).containsKey(nodeToCut))
-                        graph.getEdges(endNode).remove(nodeToCut);
-                
-                    if(graph.getEdges(nodeToCut).containsKey(endNode))
-                        graph.getEdges(nodeToCut).remove(endNode);
+                    queue.add(nodeToCut);
+
+                    //System.out.println("added to final queue");
                 
                 }
 
             }
 
-            System.out.println("DONE.");
+            removeEdges(graph, queue, endNode);
+
+            //System.out.println("DONE.");
 
         }
         else {
+
+            System.out.println("OTHER CASE.");
+
             for(int i = 0; i < roadSize; i++) {
 
                 currentNode = previousNodes.get(i);
@@ -258,15 +265,26 @@ public class Splitter {
                     cutter( graph, followingNode, followingNode + columns, road);   
                 }
             }
-            
+
         }
         
 
     }
 
+    public static void removeEdges(Graph graph, Queue<Integer> queue, Integer currentNode) {
+        Integer x;
+        while(queue.peek() != null) {
+            x = queue.poll();
+            if(graph.getEdges(currentNode).containsKey(x))
+                graph.getEdges(currentNode).remove(x);
+            if(graph.getEdges(x).containsKey(currentNode))
+                graph.getEdges(x).remove(currentNode);
+        }
+    }
+
     public static void  cutter(Graph graph, int currentNode, int nodeToCut, ArrayList<Integer> road) {
 
-        System.out.println("cuttero!!!: " + currentNode);
+        //System.out.println("cuttero!!!: " + currentNode);
 
         if( (nodeToCut != Graph.DEFAULT_NODE) && (graph.getEdges(currentNode).containsKey(nodeToCut)) && (road.get(nodeToCut) == NOT_ON_THE_ROAD)) {
             
