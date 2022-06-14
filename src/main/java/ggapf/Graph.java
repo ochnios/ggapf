@@ -183,6 +183,12 @@ public class Graph {
 		return maxWeight;
 	}
 
+	/**
+	 * Necessary funcionality which uses BFS algorithm
+	 * to define if the graph is connected
+	 * @param startingNode node from which we are starting BFS
+	 * @return info about graph being connected or not
+	 */
 	public boolean isGraphConnected(int startingNode) {
 
 		queue.add(startingNode);

@@ -14,10 +14,25 @@ public class Dijkstra extends ShortestPath {
 	static final int UNSEEN_NODE = 0;
 	static final int PREV_UNKNOWN = -1;
 
+    /**
+     * Finds shortest path between given nodes, and it's length, startds dijkstra
+     * @param graph graph we are actually working on
+     * @param beginNode node from which we start the algorithm
+     * @param endNode node at which algorithm should stop
+     * @return function dijkstra
+     * 
+     */
     public static ShortestPath findShortestPath(Graph graph, int beginNode, int endNode){
         return dijkstra(graph, beginNode, endNode);
     }
 
+    /**
+     * Dijkstra algorithm to find the shortest path
+     * @param graph graph we are actually working on
+     * @param beginNode node from which we start the algorithm
+     * @param endNode node at which algorithm should stop
+     * @return function dijkstra
+     */
     public static ShortestPath dijkstra(Graph graph, int beginNode, int endNode) {
         
         if(beginNode < 0 || beginNode >= graph.getNumberOfNodes() || endNode < 0 || endNode >= graph.getNumberOfNodes()) {
@@ -81,7 +96,13 @@ public class Dijkstra extends ShortestPath {
         return shortestPath;
     }
 
-    // returns list of nodes on shortest path from start to the end
+    /**
+     * Return list of nodes from the shortest path ( from start to end )
+     * @param previousNodes array which contains all of the nodes and their ancstors
+     * @param begin starting node 
+     * @param end end node
+     * @return returns shortest path array
+     */
     private static ArrayList<Integer> backtrace(ArrayList<Integer> previousNodes, int begin, int end) {
         ArrayList<Integer> nodesOnShortestPath = new ArrayList<Integer>();
         int currentNode = end;
