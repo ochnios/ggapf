@@ -2,6 +2,10 @@ package ggapf;
 
 import java.util.ArrayList;
 
+/**
+ * class which contains shortestPath length and actuall shortestPath found
+ * using Dijkstra algorithm
+ */
 public class ShortestPath {
     private double pathLength;
     private ArrayList<Integer> path;

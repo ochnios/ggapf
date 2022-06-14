@@ -1,5 +1,8 @@
 package ggapf;
 
+/**
+ * Class which contains node and the weigh of the edge which goes to the node
+ */
 public class NodeAndWeightPair implements Comparable<NodeAndWeightPair> {
     private int node;
     private double weight;

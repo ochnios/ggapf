@@ -7,6 +7,9 @@ import java.util.Queue;
 
 import javafx.scene.control.skin.TextInputControlSkin.Direction;
 
+/**
+ * Splits graph
+ */
 public class Splitter {
 
     static final int MAXIMUM_AMOUNT_OF_NEIGHBOURS = 4;
@@ -22,7 +25,13 @@ public class Splitter {
     static final int DOWN = 2;
     static final int LEFT = 3;
 
-
+    /**
+     * Finds best nodes to start spliting graph, finds the fastes route
+     * between them using Dijkstra algorithm and splits the graph
+     * @param graph graph we are actually working on
+     * @param subgraphs amount of subgraphs we want our graph to be divided to
+     * @return splitted graph
+     */
     public static Graph split(Graph graph, int subgraphs) {
         if(subgraphs <= 1) return graph;
 
@@ -71,6 +80,12 @@ public class Splitter {
         return graph;
     }
 
+    /**
+     * Part responsible for the cutting graph into subgraphs
+     * @param graph graph we are actually working on
+     * @param previousNodes array with the fastest route
+     * @param seenNodes array of seen nodes on the route
+     */
     public static void splitter(Graph graph,  ArrayList<Integer> previousNodes, ArrayList<Integer> seenNodes) {
 
         int nodesAmount = graph.getNumberOfNodes();
@@ -271,6 +286,12 @@ public class Splitter {
 
     }
 
+    /**
+     * removes edges from the currentNode
+     * @param graph graph we are actually working on
+     * @param queue queue which contains nodes to be cut
+     * @param currentNode node from which we are cutting the edges
+     */
     public static void removeEdges(Graph graph, Queue<Integer> queue, Integer currentNode) {
         Integer x;
         while(queue.peek() != null) {
@@ -282,6 +303,13 @@ public class Splitter {
         }
     }
 
+    /**
+     * removes specific connection between nodes
+     * @param graph graph we are actually working on
+     * @param currentNode node between which we want to cut the connection
+     * @param nodeToCut node between which we want to cut the connection
+     * @param road array which knows if node is a part of the road
+     */
     public static void  cutter(Graph graph, int currentNode, int nodeToCut, ArrayList<Integer> road) {
 
         //System.out.println("cuttero!!!: " + currentNode);
@@ -298,7 +326,15 @@ public class Splitter {
         
 
     }
-
+    
+    /**
+     * Specifies the direction the shortest path goes
+     * @param rows amount of rows in the graph
+     * @param columns amount of columns in the graph
+     * @param currentNode 
+     * @param followingNode
+     * @return the direction
+     */
     public static int direction(int rows, int columns, int currentNode, int followingNode ) {
 
         if( followingNode == ( currentNode - columns ) )
@@ -317,6 +353,12 @@ public class Splitter {
     
     }
 
+    /**
+     * looks for the subgraph of the given graph
+     * @param graph graph we are actually working on
+     * @param startingNode node from which we are looking for the subgraph
+     * @param seenNodes array containing info about subgraph's nodes
+     */
     public static void lookForTheSubgraph(Graph graph, int startingNode, ArrayList<Integer> seenNodes) {
 
 		int nodesAmount = graph.getNumberOfNodes();
@@ -346,6 +388,12 @@ public class Splitter {
 
 	}
 
+    /**
+     * defines if a node is on the edge or not
+     * @param graph graph we are actually working on
+     * @param node node we want to know if it's a part of the edge
+     * @return info about node being part of the edge
+     */
     public static boolean isOnTheEdge(Graph graph, int node) {
         int connectionAmount = 0; //it's gona define if node is on the edge by the number of connections
 
@@ -360,6 +408,11 @@ public class Splitter {
         
     }
 
+    /**
+     * randomizes node
+     * @param nodesAmount amount of the nodes in graph
+     * @return random node
+     */
     public static int randomNode(int nodesAmount) {
         return (int) Math.floor(Math.random()*(nodesAmount+1));
     }
