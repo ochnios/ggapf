@@ -31,29 +31,24 @@ public class Splitter {
         int startingNode;
         int endNode;
         ArrayList<Integer> seenNodes = new ArrayList<Integer>(nodesAmount);
-        ArrayList<Integer> previousNodes = new ArrayList<Integer>(nodesAmount);
         ShortestPath shortestPath = new ShortestPath();
 
         //setting arrays
         for(int i = 0; i < nodesAmount; i++) {
 			seenNodes.add(0);
-            previousNodes.add(0);
 		}
 
         for(int i = 1; i < subgraphs; i++) {
 
             for(int j = 0; j < nodesAmount; j++)
                 seenNodes.set(j, Graph.UNSEEN_NODE);
-            
-            for(int j = 0; j < nodesAmount; j++)
-                previousNodes.set(j, Graph.DEFAULT_NODE);
 
             startingNode = randomNode(nodesAmount);
 
             while( !isOnTheEdge(graph, startingNode) )
                 startingNode = randomNode(nodesAmount);
 
-            lookForTheSubgraph(graph, startingNode, seenNodes, previousNodes);
+            lookForTheSubgraph(graph, startingNode, seenNodes);
 
             do {
                 endNode = randomNode(nodesAmount);
@@ -63,7 +58,7 @@ public class Splitter {
 
             System.out.println("splitter() - start");
 
-            splitter(graph, shortestPath, seenNodes, previousNodes, startingNode, endNode);
+            splitter(graph, shortestPath.getPath(), seenNodes);
             
         }
 
@@ -73,13 +68,14 @@ public class Splitter {
         return graph;
     }
 
-    public static void splitter(Graph graph, ShortestPath shortestPath, ArrayList<Integer> seenNodes, ArrayList<Integer> previousNodes, int nodeFrom, int nodeTo) {
+    public static void splitter(Graph graph,  ArrayList<Integer> previousNodes, ArrayList<Integer> seenNodes) {
 
         int nodesAmount = graph.getNumberOfNodes();
         int columns = graph.getColumns();
         int rows = graph.getRows();
-        int currentNode = nodeTo;
-        int endNode = nodeFrom;
+        int roadSize = previousNodes.size();
+        int currentNode;
+        int endNode;
         int followingNode;
         int nodeToCut;
         int way;
@@ -93,21 +89,30 @@ public class Splitter {
 
         System.out.println("Added.");
 
+        currentNode = previousNodes.get(0);
+        endNode = previousNodes.get(roadSize - 1);
+
         road.set(currentNode, ON_THE_ROAD);
         road.set(endNode, ON_THE_ROAD);
 
-        System.out.println("some basic stuff");
+        System.out.println("startingNode: " + currentNode + " endNode: " + endNode);
 
-        while( currentNode != endNode ) {
+        for(int i = 0; i < roadSize; i++)
+            System.out.print(i + "[" + previousNodes.get(i) + "], ");
+
+        for(int i = 0; i < roadSize; i++) {
+
+            currentNode = previousNodes.get(i);
+            System.out.println("currentNode:" + currentNode);
             road.set(currentNode, ON_THE_ROAD);
-            currentNode = previousNodes.get(currentNode);
+
         }
 
         System.out.println("everything ready to go");
 
-        currentNode = nodeTo;
+        currentNode = previousNodes.get(0);
 
-        while( currentNode != endNode ) {
+        for(int i = 0; i < roadSize; i++) {
 
             System.out.println("CASE DEFINING");
 
@@ -121,7 +126,7 @@ public class Splitter {
 
         }
 
-        currentNode = nodeTo;
+        currentNode = previousNodes.get(0);
 
         if( mode == NORMAL_CASE ) {
 
@@ -144,11 +149,11 @@ public class Splitter {
 
             System.out.println("FIRST CUT LATER");
 
-            currentNode = nodeTo;
+            for(int i = 0; i < roadSize - 1; i++) {
+            
+                currentNode = previousNodes.get(i);
 
-            while( currentNode != endNode ) {
-
-                followingNode = previousNodes.get(currentNode);
+                followingNode = previousNodes.get(i + 1);
 
                 way = direction(rows, columns, currentNode, followingNode);
 
@@ -187,7 +192,7 @@ public class Splitter {
                             
                 }
 
-                currentNode = previousNodes.get(currentNode);
+          
 
             }
 
@@ -212,11 +217,11 @@ public class Splitter {
 
         }
         else {
-            while( currentNode != endNode ) {
+            for(int i = 0; i < roadSize; i++) {
 
-                System.out.println("");
+                currentNode = previousNodes.get(i);
 
-                followingNode = previousNodes.get(currentNode);
+                followingNode = previousNodes.get(i + 1);
     
                 way = direction( rows, columns, currentNode, followingNode );
     
@@ -253,8 +258,7 @@ public class Splitter {
                     cutter( graph, followingNode, followingNode + columns, road);   
                 }
             }
-    
-            currentNode = previousNodes.get(currentNode);
+            
         }
         
 
@@ -279,8 +283,6 @@ public class Splitter {
 
     public static int direction(int rows, int columns, int currentNode, int followingNode ) {
 
-
-
         if( followingNode == ( currentNode - columns ) )
             return UP;
         
@@ -293,12 +295,11 @@ public class Splitter {
         if( followingNode == ( currentNode - 1 ) )
             return LEFT;
 
-        return 0;
-    
+        return -1;
     
     }
 
-    public static void lookForTheSubgraph(Graph graph, int startingNode, ArrayList<Integer> seenNodes, ArrayList<Integer> previousNodes) {
+    public static void lookForTheSubgraph(Graph graph, int startingNode, ArrayList<Integer> seenNodes) {
 
 		int nodesAmount = graph.getNumberOfNodes();
 		int currentNode;
