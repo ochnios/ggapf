@@ -12,28 +12,44 @@ public class ShortestPath {
 
     static final double INFINITY = Double.MAX_VALUE;
 
+    /**
+     * constructor which sets pathLength as infinity
+     * and path as null (there is no path, no connections)
+     */
     public ShortestPath(){
         this.pathLength = INFINITY; // infinity by default
         this.path = null;
     }
 
+    /**
+     * gets path length
+     * @return path length
+     */
     public double getPathLength() {
         return this.pathLength;
     }
 
+    /**
+     * gets path
+     * @return array with the path
+     */
     public ArrayList<Integer> getPath() {
         return this.path;
     }
 
+    /**
+     * sets path length
+     * @param pathLength to be set
+     */
     public void setPathLength(double pathLength) {
         this.pathLength = pathLength;
     }
 
-    public void setShortestPath(ShortestPath shortestPath) {
-        this.pathLength = shortestPath.getPathLength();
-        this.path = shortestPath.getPath();
-    }
-
+    
+    /**
+     * sets path
+     * @param path to be set
+     */
     public void setPath(ArrayList<Integer> path) {
         this.path = path;
     }

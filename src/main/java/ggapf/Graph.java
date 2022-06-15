@@ -213,6 +213,11 @@ public class Graph {
 		return connectedGraph;
 	}
 
+	/**
+	 * Function which looks if every node has been visited
+	 * in order to specify if graph is connected or not
+	 * @return info about graph being connected or not
+	 */
 	public boolean lookIfEveryNodeHasBeenVisited() {
 
 		int nodesAmount = getNumberOfNodes();
@@ -224,6 +229,13 @@ public class Graph {
 		return CONNECTED_GRAPH;
 	}
 
+	/**
+	 * Looks for surrounding nodes in the map structure
+	 * and adds them to the queue and sets them as seen
+	 * if the connection between nodes occurs and node
+	 * has not been seen
+	 * @param currentNode node from which we want to look for nodes
+	 */
 	public void lookForTheSurroundingNodes (int currentNode) {
 		
 		for (Map.Entry<Integer, Double> edge : getEdges(currentNode).entrySet()) {

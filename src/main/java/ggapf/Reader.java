@@ -5,14 +5,26 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 
+/**
+ * Reads file and creates graph objects based on the readed file
+ */
 public class Reader {
     private Graph graph;
     private File file;
 
+    /**
+     * constructor which sets file to be read
+     * @param file to be read
+     */
     public Reader(File file) {
         this.file = file;
     }
 
+    /**
+     * reads graph
+     * @return graph
+     * @throws IOException
+     */
     public Graph readGraph() throws IOException {
 
         int rows, columns;
