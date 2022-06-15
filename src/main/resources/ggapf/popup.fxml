@@ -5,14 +5,13 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="180.0" prefWidth="416.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ggapf.PopupController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="180.0" prefWidth="463.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ggapf.PopupController">
    <children>
-      <Label fx:id="message" alignment="CENTER" layoutY="27.0" prefHeight="78.0" prefWidth="416.0" text="Something important will be here!">
+      <Label fx:id="message" alignment="CENTER" layoutY="27.0" prefHeight="78.0" prefWidth="463.0" text="Something important will be here!">
          <font>
-            <Font size="18.0" />
+            <Font size="16.0" />
          </font>
       </Label>
-      <Button fx:id="okButton" layoutX="167.0" layoutY="117.0" mnemonicParsing="false" onAction="#okButtonController" prefHeight="25.0" prefWidth="83.0" text="OK" />
+      <Button fx:id="okButton" layoutX="190.0" layoutY="105.0" mnemonicParsing="false" onAction="#okButtonController" prefHeight="25.0" prefWidth="83.0" text="OK" />
    </children>
 </AnchorPane>
